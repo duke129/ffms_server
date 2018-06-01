@@ -27,9 +27,9 @@ public class City implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
 
-	//bi-directional many-to-one association to Branch
+	/*//bi-directional many-to-one association to Branch
 	@OneToMany(mappedBy="city")
-	private List<Branch> branches;
+	private List<Branch> branches;*/
 
 	//bi-directional many-to-one association to Status
 	@ManyToOne
@@ -46,10 +46,10 @@ public class City implements Serializable {
 	@JoinColumn(name="modifiedByUserId")
 	private User user2;
 
-	//bi-directional many-to-one association to Customer
+	/*//bi-directional many-to-one association to Customer
 	@OneToMany(mappedBy="city")
 	private List<Customer> customers;
-
+*/
 	public City() {
 	}
 
@@ -85,7 +85,7 @@ public class City implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public List<Branch> getBranches() {
+/*	public List<Branch> getBranches() {
 		return this.branches;
 	}
 
@@ -105,7 +105,7 @@ public class City implements Serializable {
 		branch.setCity(null);
 
 		return branch;
-	}
+	}*/
 
 	public Status getStatusBean() {
 		return this.statusBean;
@@ -131,7 +131,7 @@ public class City implements Serializable {
 		this.user2 = user2;
 	}
 
-	public List<Customer> getCustomers() {
+/*	public List<Customer> getCustomers() {
 		return this.customers;
 	}
 
@@ -151,6 +151,6 @@ public class City implements Serializable {
 		customer.setCity(null);
 
 		return customer;
-	}
+	}*/
 
 }

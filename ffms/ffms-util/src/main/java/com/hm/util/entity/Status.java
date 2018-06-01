@@ -10,17 +10,20 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Status.findAll", query="SELECT s FROM Status s")
+//@NamedQuery(name="Status.findAll", query="SELECT s FROM Status s")
+@Table(name = "Status")
 public class Status implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idStatus;
+	//@Column(name = "idStatus")
+	private Integer idStatus;
 
+	//@Column(name = "statusDescription")
 	private String statusDescription;
 
-	//bi-directional many-to-one association to Area
+	/*//bi-directional many-to-one association to Area
 	@OneToMany(mappedBy="statusBean")
 	private List<Area> areas;
 
@@ -58,16 +61,16 @@ public class Status implements Serializable {
 
 	//bi-directional many-to-one association to User
 	@OneToMany(mappedBy="statusBean")
-	private List<User> users;
+	private List<User> users;*/
 
 	public Status() {
 	}
 
-	public int getIdStatus() {
+	public Integer getIdStatus() {
 		return this.idStatus;
 	}
 
-	public void setIdStatus(int idStatus) {
+	public void setIdStatus(Integer idStatus) {
 		this.idStatus = idStatus;
 	}
 
@@ -78,7 +81,7 @@ public class Status implements Serializable {
 	public void setStatusDescription(String statusDescription) {
 		this.statusDescription = statusDescription;
 	}
-
+/*
 	public List<Area> getAreas() {
 		return this.areas;
 	}
@@ -297,6 +300,6 @@ public class Status implements Serializable {
 		user.setStatusBean(null);
 
 		return user;
-	}
+	}*/
 
 }
