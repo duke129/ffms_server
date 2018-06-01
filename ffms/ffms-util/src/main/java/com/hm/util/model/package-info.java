@@ -5,4 +5,4 @@
  * @author kiran
  *
  */
-package com.hm.util;
+package com.hm.util.model;
