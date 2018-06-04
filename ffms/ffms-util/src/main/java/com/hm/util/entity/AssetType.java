@@ -20,10 +20,10 @@ public class AssetType implements Serializable {
 
 	private String assetTypeDescription;
 
-	//bi-directional many-to-one association to Asset
+	/*//bi-directional many-to-one association to Asset
 	@OneToMany(mappedBy="assetType")
 	private List<Asset> assets;
-
+*/
 	public AssetType() {
 	}
 
@@ -43,7 +43,7 @@ public class AssetType implements Serializable {
 		this.assetTypeDescription = assetTypeDescription;
 	}
 
-	public List<Asset> getAssets() {
+	/*public List<Asset> getAssets() {
 		return this.assets;
 	}
 
@@ -63,6 +63,6 @@ public class AssetType implements Serializable {
 		asset.setAssetType(null);
 
 		return asset;
-	}
+	}*/
 
 }

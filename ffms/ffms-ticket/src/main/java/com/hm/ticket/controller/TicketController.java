@@ -13,14 +13,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hm.dao.mysql.status.SatusRepository;
+import com.hm.ticket.manager.TicketManager;
 import com.hm.util.entity.Status;
 import com.hm.util.entity.Ticket;
+import com.hm.util.model.TicketCardViewData;
+import com.hm.util.model.TicketPojo;
 
 /**
  * @author kiran
@@ -32,13 +36,8 @@ import com.hm.util.entity.Ticket;
 public class TicketController {
 	
 	@Autowired
-	SatusRepository statuRepository;
+	TicketManager ticketManager;
 	
-	@GetMapping(path = "/test")
-	public String ticketTest()
-	{
-		return "Ticket Tested";
-	}
 	
 	@PostMapping("create")
 	public ResponseEntity<Void> addTicket(@RequestBody Ticket ticket)
@@ -49,10 +48,28 @@ public class TicketController {
 		
 	}
 	
-	@GetMapping("status")
-	public List<Status> getSatusById()
+//	@GetMapping("status")
+//	public List<Status> getSatusById()
+//	{
+//		return statuRepository.findAll();
+//	}
+	
+	@GetMapping("test")
+	public List<TicketPojo> getAllTickets()
 	{
-		return statuRepository.findAll();
+		return ticketManager.getAllTickets();
+	}
+	
+	@PostMapping("list-view")
+	public List<TicketCardViewData> getTicketSummary()
+	{
+		return ticketManager.getTicketSummary();
+	}
+	
+	@GetMapping("detail/{id}")
+	public Ticket getTicketById(@PathVariable("id") Long id)
+	{
+		return ticketManager.getTicketSummaryZoom(id);
 	}
 
 }

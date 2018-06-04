@@ -20,9 +20,9 @@ public class TicketType implements Serializable {
 
 	private String ticketType;
 
-	//bi-directional many-to-one association to Ticket
+	/*//bi-directional many-to-one association to Ticket
 	@OneToMany(mappedBy="ticketType")
-	private List<Ticket> tickets;
+	private List<Ticket> tickets;*/
 
 	//bi-directional many-to-one association to Status
 	@ManyToOne
@@ -48,7 +48,7 @@ public class TicketType implements Serializable {
 		this.ticketType = ticketType;
 	}
 
-	public List<Ticket> getTickets() {
+	/*public List<Ticket> getTickets() {
 		return this.tickets;
 	}
 
@@ -69,7 +69,7 @@ public class TicketType implements Serializable {
 
 		return ticket;
 	}
-
+*/
 	public Status getStatusBean() {
 		return this.statusBean;
 	}

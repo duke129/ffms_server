@@ -38,7 +38,7 @@ public class User implements Serializable {
 
 	private String password;
 
-	//bi-directional many-to-one association to Area
+	/*//bi-directional many-to-one association to Area
 	@OneToMany(mappedBy="user1")
 	private List<Area> areas1;
 
@@ -92,7 +92,7 @@ public class User implements Serializable {
 
 	//bi-directional many-to-one association to Ticket
 	@OneToMany(mappedBy="user3")
-	private List<Ticket> tickets3;
+	private List<Ticket> tickets3;*/
 
 	//bi-directional many-to-one association to Status
 	@ManyToOne
@@ -174,15 +174,15 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public List<Area> getAreas1() {
+/*	public List<Area> getAreas1() {
 		return this.areas1;
 	}
 
 	public void setAreas1(List<Area> areas1) {
 		this.areas1 = areas1;
-	}
+	}*/
 
-	public Area addAreas1(Area areas1) {
+	/*public Area addAreas1(Area areas1) {
 		getAreas1().add(areas1);
 		areas1.setUser1(this);
 
@@ -401,8 +401,8 @@ public class User implements Serializable {
 	public void setGroups(List<Group> groups) {
 		this.groups = groups;
 	}
-
-	public List<Ticket> getTickets1() {
+*/
+/*	public List<Ticket> getTickets1() {
 		return this.tickets1;
 	}
 
@@ -466,7 +466,7 @@ public class User implements Serializable {
 		tickets3.setUser3(null);
 
 		return tickets3;
-	}
+	}*/
 
 	public Status getStatusBean() {
 		return this.statusBean;

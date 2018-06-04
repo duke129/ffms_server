@@ -28,8 +28,8 @@ public class Branch implements Serializable {
 	private Date modifiedOn;
 
 	//bi-directional many-to-one association to Area
-	@OneToMany(mappedBy="branch")
-	private List<Area> areas;
+	/*@OneToMany(mappedBy="branch")
+	private List<Area> areas;*/
 
 	//bi-directional many-to-one association to City
 	@ManyToOne
@@ -51,9 +51,9 @@ public class Branch implements Serializable {
 	@JoinColumn(name="modifiedByUserId")
 	private User user2;
 
-	//bi-directional many-to-one association to Customer
+/*	//bi-directional many-to-one association to Customer
 	@OneToMany(mappedBy="branch")
-	private List<Customer> customers;
+	private List<Customer> customers;*/
 
 	public Branch() {
 	}
@@ -90,7 +90,7 @@ public class Branch implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public List<Area> getAreas() {
+/*	public List<Area> getAreas() {
 		return this.areas;
 	}
 
@@ -111,7 +111,7 @@ public class Branch implements Serializable {
 
 		return area;
 	}
-
+*/
 	public City getCity() {
 		return this.city;
 	}
@@ -144,7 +144,7 @@ public class Branch implements Serializable {
 		this.user2 = user2;
 	}
 
-	public List<Customer> getCustomers() {
+	/*public List<Customer> getCustomers() {
 		return this.customers;
 	}
 
@@ -164,6 +164,6 @@ public class Branch implements Serializable {
 		customer.setBranch(null);
 
 		return customer;
-	}
+	}*/
 
 }

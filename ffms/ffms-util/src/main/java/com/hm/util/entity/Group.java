@@ -39,7 +39,7 @@ public class Group implements Serializable {
 	private Status statusBean;
 
 	//bi-directional many-to-many association to User
-	@ManyToMany
+	/*@ManyToMany
 	@JoinTable(
 		name="UserGroupMapping"
 		, joinColumns={
@@ -49,11 +49,11 @@ public class Group implements Serializable {
 			@JoinColumn(name="idUser")
 			}
 		)
-	private List<User> users;
+	private List<User> users;*/
 
 	//bi-directional many-to-many association to Role
-	@ManyToMany(mappedBy="groups")
-	private List<Role> roles;
+	/*@ManyToMany(mappedBy="groups")
+	private List<Role> roles;*/
 
 	public Group() {
 	}
@@ -114,7 +114,7 @@ public class Group implements Serializable {
 		this.statusBean = statusBean;
 	}
 
-	public List<User> getUsers() {
+	/*public List<User> getUsers() {
 		return this.users;
 	}
 
@@ -129,5 +129,5 @@ public class Group implements Serializable {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-
+*/
 }

@@ -48,7 +48,7 @@ public class Customer implements Serializable {
 	private Area area;
 
 	//bi-directional many-to-many association to Asset
-	@ManyToMany
+	/*@ManyToMany
 	@JoinTable(
 		name="CustomerAssetMapping"
 		, joinColumns={
@@ -58,7 +58,7 @@ public class Customer implements Serializable {
 			@JoinColumn(name="idAsset")
 			}
 		)
-	private List<Asset> assets;
+	private List<Asset> assets;*/
 
 	//bi-directional many-to-one association to Branch
 	@ManyToOne
@@ -85,9 +85,9 @@ public class Customer implements Serializable {
 	@JoinColumn(name="modifiedByUserId")
 	private User user2;
 
-	//bi-directional many-to-one association to Ticket
+	/*//bi-directional many-to-one association to Ticket
 	@OneToMany(mappedBy="customer")
-	private List<Ticket> tickets;
+	private List<Ticket> tickets;*/
 
 	public Customer() {
 	}
@@ -188,14 +188,14 @@ public class Customer implements Serializable {
 		this.area = area;
 	}
 
-	public List<Asset> getAssets() {
+/*	public List<Asset> getAssets() {
 		return this.assets;
 	}
 
 	public void setAssets(List<Asset> assets) {
 		this.assets = assets;
 	}
-
+*/
 	public Branch getBranch() {
 		return this.branch;
 	}
@@ -236,15 +236,15 @@ public class Customer implements Serializable {
 		this.user2 = user2;
 	}
 
-	public List<Ticket> getTickets() {
+	/*public List<Ticket> getTickets() {
 		return this.tickets;
 	}
 
 	public void setTickets(List<Ticket> tickets) {
 		this.tickets = tickets;
-	}
+	}*/
 
-	public Ticket addTicket(Ticket ticket) {
+	/*public Ticket addTicket(Ticket ticket) {
 		getTickets().add(ticket);
 		ticket.setCustomer(this);
 
@@ -256,6 +256,6 @@ public class Customer implements Serializable {
 		ticket.setCustomer(null);
 
 		return ticket;
-	}
+	}*/
 
 }

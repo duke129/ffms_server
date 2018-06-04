@@ -35,21 +35,21 @@ public class Area implements Serializable {
 	//bi-directional many-to-one association to Status
 	@ManyToOne
 	@JoinColumn(name="status")
-	private Status statusBean;
+	private Status status;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="createdByUserId")
-	private User user1;
+	private User createdByUser;
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="modifiedByUserId")
 	private User user2;
 
-	//bi-directional many-to-one association to Customer
+/*	//bi-directional many-to-one association to Customer
 	@OneToMany(mappedBy="area")
-	private List<Customer> customers;
+	private List<Customer> customers;*/
 
 	public Area() {
 	}
@@ -94,20 +94,20 @@ public class Area implements Serializable {
 		this.branch = branch;
 	}
 
-	public Status getStatusBean() {
-		return this.statusBean;
+	public Status getStatus() {
+		return this.status;
 	}
 
-	public void setStatusBean(Status statusBean) {
-		this.statusBean = statusBean;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
-	public User getUser1() {
-		return this.user1;
+	public User getCreatedByUser() {
+		return this.createdByUser;
 	}
 
-	public void setUser1(User user1) {
-		this.user1 = user1;
+	public void setCreatedByUser(User createdByUser) {
+		this.createdByUser = createdByUser;
 	}
 
 	public User getUser2() {
@@ -118,15 +118,15 @@ public class Area implements Serializable {
 		this.user2 = user2;
 	}
 
-	public List<Customer> getCustomers() {
+/*	public List<Customer> getCustomers() {
 		return this.customers;
 	}
 
 	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
 	}
-
-	public Customer addCustomer(Customer customer) {
+*/
+	/*public Customer addCustomer(Customer customer) {
 		getCustomers().add(customer);
 		customer.setArea(this);
 
@@ -138,6 +138,6 @@ public class Area implements Serializable {
 		customer.setArea(null);
 
 		return customer;
-	}
+	}*/
 
 }

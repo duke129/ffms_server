@@ -52,14 +52,14 @@ public class Asset implements Serializable {
 	@JoinColumn(name="modifiedByUserId")
 	private User user2;
 
-	//bi-directional many-to-many association to Customer
+/*	//bi-directional many-to-many association to Customer
 	@ManyToMany(mappedBy="assets")
 	private List<Customer> customers;
 
 	//bi-directional many-to-one association to Ticket
 	@OneToMany(mappedBy="asset")
 	private List<Ticket> tickets;
-
+*/
 	public Asset() {
 	}
 
@@ -143,7 +143,7 @@ public class Asset implements Serializable {
 		this.user2 = user2;
 	}
 
-	public List<Customer> getCustomers() {
+	/*public List<Customer> getCustomers() {
 		return this.customers;
 	}
 
@@ -171,6 +171,6 @@ public class Asset implements Serializable {
 		ticket.setAsset(null);
 
 		return ticket;
-	}
+	}*/
 
 }
