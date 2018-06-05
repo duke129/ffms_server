@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.hm.util.entity.Ticket;
 import com.hm.util.model.TicketCardViewData;
-import com.hm.util.model.TicketPojo;
+import com.hm.util.model.TicketDetails;
 
 /**
  * @author kiran
@@ -17,7 +17,7 @@ public interface TicketManager {
 	
 	boolean addTicket(Ticket ticket);
 	
-	List<TicketPojo> getAllTickets();
+	List<TicketDetails> getAllTickets();
 	
 	List<TicketCardViewData> getTicketSummary();
 	

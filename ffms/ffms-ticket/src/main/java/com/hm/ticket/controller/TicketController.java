@@ -24,7 +24,7 @@ import com.hm.ticket.manager.TicketManager;
 import com.hm.util.entity.Status;
 import com.hm.util.entity.Ticket;
 import com.hm.util.model.TicketCardViewData;
-import com.hm.util.model.TicketPojo;
+import com.hm.util.model.TicketDetails;
 
 /**
  * @author kiran
@@ -55,7 +55,7 @@ public class TicketController {
 //	}
 	
 	@GetMapping("test")
-	public List<TicketPojo> getAllTickets()
+	public List<TicketDetails> getAllTickets()
 	{
 		return ticketManager.getAllTickets();
 	}

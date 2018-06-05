@@ -12,7 +12,7 @@ import com.hm.dao.mysql.ticket.TicketDo;
 import com.hm.dao.mysql.ticket.TicketRepository;
 import com.hm.util.entity.Ticket;
 import com.hm.util.model.TicketCardViewData;
-import com.hm.util.model.TicketPojo;
+import com.hm.util.model.TicketDetails;
 
 /**
  * @author kiran
@@ -41,7 +41,7 @@ public class TicketManagerImpl implements TicketManager{
 	 * 
 	 */
 	@Override
-	public List<TicketPojo> getAllTickets() {
+	public List<TicketDetails> getAllTickets() {
 		
 		//return ticketRepository.findAll();
 		return ticketDAO.getAllTickets();

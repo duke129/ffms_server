@@ -10,7 +10,7 @@ public class TicketCardViewData {
 	private String customerMobileNumber;
 	private String customerAddress;
 	private Date ticketCreationDate;
-	private Date ticketETR;
+	private String committedETR;
 	public Long getTicketId() {
 		return ticketId;
 	}
@@ -47,11 +47,11 @@ public class TicketCardViewData {
 	public void setTicketCreationDate(Date ticketCreationDate) {
 		this.ticketCreationDate = ticketCreationDate;
 	}
-	public Date getTicketETR() {
-		return ticketETR;
+	public String getCommittedETR() {
+		return committedETR;
 	}
-	public void setTicketETR(Date ticketETR) {
-		this.ticketETR = ticketETR;
+	public void setCommittedETR(String committedETR) {
+		this.committedETR = committedETR;
 	}
 	
 	

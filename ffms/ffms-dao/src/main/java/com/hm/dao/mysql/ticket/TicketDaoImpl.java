@@ -18,9 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hm.util.GenericUtil;
 import com.hm.util.entity.Ticket;
 import com.hm.util.model.TicketCardViewData;
-import com.hm.util.model.TicketPojo;
+import com.hm.util.model.TicketDetails;
 
 /**
  * @author kiran
@@ -65,16 +66,16 @@ public class TicketDaoImpl  implements TicketDo {
 	}
 
 	@Override
-	public List<TicketPojo> getAllTickets() {
-		TicketPojo tp = new TicketPojo();
-		List<TicketPojo> ticketLists = new ArrayList<TicketPojo>();
+	public List<TicketDetails> getAllTickets() {
+		TicketDetails tp = new TicketDetails();
+		List<TicketDetails> ticketLists = new ArrayList<TicketDetails>();
 		
 		List<Object[]> tickets = entityManager.createNativeQuery("select * from Ticket").getResultList();
 		
 		for (Object[] object : tickets) {
-			tp.setIdTicket((BigInteger) object[0]);
+			tp.setTicketId(((BigInteger) object[0]).longValue());
 			tp.setTicketDescription((String) object[10]);
-			tp.setIdCustomer((BigInteger) object[1]);
+			tp.setCustomerId(((BigInteger) object[1]).longValue());
 			ticketLists.add(tp);
 		}
 		
@@ -101,7 +102,7 @@ public class TicketDaoImpl  implements TicketDo {
 			cardViewData.setTicketId(((BigInteger)object[0]).longValue());
 			cardViewData.setTicketNumber(((BigInteger)object[0]).toString());
 			cardViewData.setTicketCreationDate((Date)object[1]);
-			cardViewData.setTicketETR((Date)object[1]);
+			cardViewData.setCommittedETR(GenericUtil.convertDateToStringFromate((Date)object[1]));
 			cardViewData.setCustomerName((String)object[2]);
 			cardViewData.setCustomerMobileNumber((String)object[3]);
 			cardViewData.setCustomerAddress((String)object[4]);
