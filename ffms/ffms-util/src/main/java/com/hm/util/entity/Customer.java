@@ -43,7 +43,7 @@ public class Customer implements Serializable {
 	private String title;
 
 	//bi-directional many-to-one association to Area
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="areaId")
 	private Area area;
 
@@ -61,27 +61,27 @@ public class Customer implements Serializable {
 	private List<Asset> assets;*/
 
 	//bi-directional many-to-one association to Branch
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="branchId")
 	private Branch branch;
 
 	//bi-directional many-to-one association to City
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cityId")
 	private City city;
 
 	//bi-directional many-to-one association to Status
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="status")
 	private Status statusBean;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="createdByUserId")
 	private User user1;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="modifiedByUserId")
 	private User user2;
 
