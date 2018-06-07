@@ -6,4 +6,17 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>ffms-asset</artifactId>
+  
+  <dependencies>
+  <dependency>
+    <groupId>com.hm.ffms</groupId>
+    <artifactId>ffms-util</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </dependency>
+  <dependency>
+    <groupId>com.hm.ffms</groupId>
+    <artifactId>ffms-dao</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </dependency>
+  </dependencies>
 </project>
