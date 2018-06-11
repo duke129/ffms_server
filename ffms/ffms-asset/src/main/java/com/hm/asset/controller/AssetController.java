@@ -22,7 +22,7 @@ public class AssetController {
 	@GetMapping(path = "/list")
 	public List<AssetVo> getAllAsset() {
 
-		List<AssetVo> listOfAsset = assetManager.findAll();
+		List<AssetVo> listOfAsset = assetManager.findAllAsset();
 		return listOfAsset;
 	}
 
