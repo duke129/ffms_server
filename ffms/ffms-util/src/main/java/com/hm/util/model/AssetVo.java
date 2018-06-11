@@ -7,7 +7,7 @@ public class AssetVo {
 	private int status;
 	private String installationLat;
 	private String installationLong;
-	private Long idAssetType;
+	private Integer idAssetType;
 	private String assetTypeDes;
 	private String assetName;
 
@@ -67,11 +67,11 @@ public class AssetVo {
 		this.installationLong = installationLong;
 	}
 
-	public Long getIdAssetType() {
+	public Integer getIdAssetType() {
 		return idAssetType;
 	}
 
-	public void setIdAssetType(Long idAssetType) {
+	public void setIdAssetType(Integer idAssetType) {
 		this.idAssetType = idAssetType;
 	}
 
