@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hm.util.entity.Customer;
-import com.hm.util.model.TicketPojo;
 
 /**
  * @author kiran
@@ -33,7 +32,7 @@ public class CustomerDaoImpl implements CustomerDao{
 	@Override
 	public List<Customer> getAllCustomers() {
 		
-		Customer cos = new Customer();
+		
 		
 		List<Customer> customers = new ArrayList<Customer>();
 		
@@ -41,6 +40,7 @@ public class CustomerDaoImpl implements CustomerDao{
 		
 		
 		for (Object[] object : customersEntity) {
+			Customer cos = new Customer();
 			cos.setFirstName((String) object[2]);      
 			cos.setLastName((String) object[3]);
 			cos.setMobileNumber((String) object[5]);

@@ -6,6 +6,8 @@ package com.hm.ticket.manager;
 import java.util.List;
 
 import com.hm.util.entity.Ticket;
+import com.hm.util.model.DashBoardSummaryCountVo;
+import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
 
@@ -15,12 +17,12 @@ import com.hm.util.model.TicketDetails;
  */
 public interface TicketManager {
 	
-	boolean addTicket(Ticket ticket);
+	boolean createTicket(ProspectCreation prospectCreation);
 	
-	List<TicketDetails> getAllTickets();
+	List<TicketDetails> getTicketDetails(Long id);
 	
 	List<TicketCardViewData> getTicketSummary();
 	
-	Ticket getTicketSummaryZoom(Long id);
-
+	List<DashBoardSummaryCountVo> getDashBoardSummary();
+	
 }

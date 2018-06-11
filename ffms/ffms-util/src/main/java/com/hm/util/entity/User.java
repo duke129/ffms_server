@@ -18,7 +18,7 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String idUser;
+	private Long idUser;
 
 	private BigInteger createdByUserId;
 
@@ -102,11 +102,11 @@ public class User implements Serializable {
 	public User() {
 	}
 
-	public String getIdUser() {
+	public Long getIdUser() {
 		return this.idUser;
 	}
 
-	public void setIdUser(String idUser) {
+	public void setIdUser(Long idUser) {
 		this.idUser = idUser;
 	}
 
