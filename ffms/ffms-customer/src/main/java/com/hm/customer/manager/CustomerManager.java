@@ -7,12 +7,12 @@ import java.util.List;
 
 import com.hm.util.entity.Customer;
 
-/**
- * @author kiran
- *
- */
 public interface CustomerManager {
 	
 	List<Customer> getAllCustomers();
+	
+	String addCustomer(Customer customer);
+	
+	String modifyCustomerDetails(Customer customer);
 
 }

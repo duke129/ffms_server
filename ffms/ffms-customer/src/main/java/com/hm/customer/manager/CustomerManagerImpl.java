@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.hm.customer.manager;
 
 import java.util.List;
@@ -11,10 +8,6 @@ import org.springframework.stereotype.Service;
 import com.hm.dao.mysql.customer.CustomerDao;
 import com.hm.util.entity.Customer;
 
-/**
- * @author kiran
- *
- */
 @Service
 public class CustomerManagerImpl implements CustomerManager {
 
@@ -24,6 +17,19 @@ public class CustomerManagerImpl implements CustomerManager {
 	@Override
 	public List<Customer> getAllCustomers() {
 		return customerDao.getAllCustomers();
+	}
+	
+	@Override
+	public String addCustomer(Customer customer) {
+		
+		System.out.println("customer********************"+customer);
+		return customerDao.addCustomer(customer);
+	}
+
+	@Override
+	public String modifyCustomerDetails(Customer customer) {
+		
+		return customerDao.modifyCustomerDetails(customer);
 	}
 
 }

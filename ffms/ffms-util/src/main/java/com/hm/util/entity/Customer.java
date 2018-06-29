@@ -16,8 +16,8 @@ public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
 	private String alternativeMobileNo;
 
@@ -92,11 +92,11 @@ public class Customer implements Serializable {
 	public Customer() {
 	}
 
-	public String getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -236,6 +236,15 @@ public class Customer implements Serializable {
 		this.user2 = user2;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", alternativeMobileNo=" + alternativeMobileNo + ", communicationAdderss="
+				+ communicationAdderss + ", createdOn=" + createdOn + ", customerType=" + customerType + ", emailId="
+				+ emailId + ", firstName=" + firstName + ", lastName=" + lastName + ", mobileNumber=" + mobileNumber
+				+ ", modifiedOn=" + modifiedOn + ", title=" + title + ", area=" + area + ", branch=" + branch
+				+ ", city=" + city + ", statusBean=" + statusBean + ", user1=" + user1 + ", user2=" + user2 + "]";
+	}
+
 	/*public List<Ticket> getTickets() {
 		return this.tickets;
 	}
@@ -257,5 +266,7 @@ public class Customer implements Serializable {
 
 		return ticket;
 	}*/
+	
+	
 
 }

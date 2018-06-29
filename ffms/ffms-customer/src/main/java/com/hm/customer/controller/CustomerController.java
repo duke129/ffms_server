@@ -6,13 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hm.customer.manager.CustomerManager;
 import com.hm.util.entity.Customer;
 
-
+@CrossOrigin
 @Controller
 @RestController
 @RequestMapping("/customer")
@@ -27,23 +30,26 @@ public class CustomerController {
 		return "Customer tested";
 	}
 	
-	@GetMapping(path = "/add")
-	public String addCustomer()
+	@PostMapping(path = "/add")
+	public String addCustomer(@RequestBody Customer customer)
 	{
-		return "Customer tested";
+		System.out.println("ADD customer controller @@@@@@@@@@@@"+customer);
+		 return customerManager.addCustomer(customer);
+		 
 	}
 	
-	@CrossOrigin
+	
 	@GetMapping(path = "/getall")
 	public List<Customer> getAllCustomers()
 	{
 		return customerManager.getAllCustomers();
 	}
 	
-	@GetMapping(path = "/modify")
-	public String modifyCustomerDetails()
+	@PutMapping(path = "/modify")
+	public String modifyCustomerDetails(@RequestBody Customer customer)
 	{
-		return "Customer tested";
+		System.out.println("started customer modification");
+		return customerManager.modifyCustomerDetails(customer);
 	}
 	
 	@GetMapping(path = "/delete")
