@@ -17,7 +17,7 @@ public class City implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idCity;
+	private Long idCity;
 
 	private String cityName;
 
@@ -53,11 +53,11 @@ public class City implements Serializable {
 	public City() {
 	}
 
-	public int getIdCity() {
+	public Long getIdCity() {
 		return this.idCity;
 	}
 
-	public void setIdCity(int idCity) {
+	public void setIdCity(Long idCity) {
 		this.idCity = idCity;
 	}
 

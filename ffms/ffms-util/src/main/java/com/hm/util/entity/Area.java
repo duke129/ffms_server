@@ -17,7 +17,7 @@ public class Area implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String idArea;
+	private Integer idArea;
 
 	private String areaName;
 
@@ -54,11 +54,11 @@ public class Area implements Serializable {
 	public Area() {
 	}
 
-	public String getIdArea() {
+	public Integer getIdArea() {
 		return this.idArea;
 	}
 
-	public void setIdArea(String idArea) {
+	public void setIdArea(Integer idArea) {
 		this.idArea = idArea;
 	}
 

@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hm.dao.mysql.status.SatusRepository;
+import com.hm.dao.mysql.status.StatusRepository;
 import com.hm.ticket.manager.TicketManager;
 import com.hm.util.entity.Status;
 import com.hm.util.entity.Ticket;
+import com.hm.util.model.DashBoardSummaryCountVo;
+import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
 
@@ -38,38 +41,44 @@ public class TicketController {
 	@Autowired
 	TicketManager ticketManager;
 	
-	
+	@CrossOrigin
 	@PostMapping("create")
-	public ResponseEntity<Void> addTicket(@RequestBody Ticket ticket)
+	public String createTicket(@RequestBody ProspectCreation prospectCreation)
 	{
+		 boolean result = ticketManager.createTicket(prospectCreation);
+		 
+		 HttpHeaders headers = new HttpHeaders();
+		 
+		 if(result)
+		 {
+			 return  "Created Successfully";
+		 }
+		 else
+			 return "Failed to create";
 		
-		HttpHeaders headers = new HttpHeaders();
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		
 		
 	}
 	
-//	@GetMapping("status")
-//	public List<Status> getSatusById()
-//	{
-//		return statuRepository.findAll();
-//	}
-	
-	@GetMapping("test")
-	public List<TicketDetails> getAllTickets()
+	@CrossOrigin
+	@GetMapping("details/{id}")
+	public List<TicketDetails> getTicketDetails(@PathVariable("id") Long id)
 	{
-		return ticketManager.getAllTickets();
+		return ticketManager.getTicketDetails(id);
 	}
 	
-	@PostMapping("list-view")
+	@CrossOrigin
+	@GetMapping("list-view")
 	public List<TicketCardViewData> getTicketSummary()
 	{
 		return ticketManager.getTicketSummary();
 	}
 	
-	@GetMapping("detail/{id}")
-	public Ticket getTicketById(@PathVariable("id") Long id)
+	@CrossOrigin
+	@GetMapping("dashboard-count")
+	public List<DashBoardSummaryCountVo> getDashBoardSummary()
 	{
-		return ticketManager.getTicketSummaryZoom(id);
+		return ticketManager.getDashBoardSummary();
 	}
 
 }

@@ -17,7 +17,7 @@ public class Branch implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String idBranch;
+	private Long idBranch;
 
 	private String branchName;
 
@@ -58,11 +58,11 @@ public class Branch implements Serializable {
 	public Branch() {
 	}
 
-	public String getIdBranch() {
+	public Long getIdBranch() {
 		return this.idBranch;
 	}
 
-	public void setIdBranch(String idBranch) {
+	public void setIdBranch(Long idBranch) {
 		this.idBranch = idBranch;
 	}
 

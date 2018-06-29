@@ -1,9 +1,18 @@
 package com.hm.util.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -11,7 +20,6 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Asset.findAll", query="SELECT a FROM Asset a")
 public class Asset implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,22 +41,22 @@ public class Asset implements Serializable {
 	private Date modifiedDate;
 
 	//bi-directional many-to-one association to AssetType
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="idAssetType")
 	private AssetType assetType;
 
 	//bi-directional many-to-one association to Status
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="status")
 	private Status statusBean;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="createdByUserId")
 	private User user1;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="modifiedByUserId")
 	private User user2;
 

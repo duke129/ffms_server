@@ -53,6 +53,13 @@ public class TicketCardViewData {
 	public void setCommittedETR(String committedETR) {
 		this.committedETR = committedETR;
 	}
+	@Override
+	public String toString() {
+		return "TicketCardViewData [ticketId=" + ticketId + ", ticketNumber=" + ticketNumber + ", customerName="
+				+ customerName + ", customerMobileNumber=" + customerMobileNumber + ", customerAddress="
+				+ customerAddress + ", ticketCreationDate=" + ticketCreationDate + ", committedETR=" + committedETR
+				+ "]";
+	}
 	
 	
 	
