@@ -3,7 +3,7 @@ package com.hm.util.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
 
 
 /**
@@ -144,6 +144,13 @@ public class Branch implements Serializable {
 		this.user2 = user2;
 	}
 
+	@Override
+	public String toString() {
+		return "Branch [idBranch=" + idBranch + ", branchName=" + branchName + ", createdOn=" + createdOn
+				+ ", modifiedOn=" + modifiedOn + ", city=" + city + ", statusBean=" + statusBean + ", user1=" + user1
+				+ ", user2=" + user2 + "]";
+	}
+
 	/*public List<Customer> getCustomers() {
 		return this.customers;
 	}
@@ -165,5 +172,8 @@ public class Branch implements Serializable {
 
 		return customer;
 	}*/
+	
+	
+	
 
 }

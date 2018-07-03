@@ -11,6 +11,6 @@ import com.hm.util.entity.Area;
  * @author kiran
  *
  */
-public interface AreaRepository extends JpaRepository<Area, Integer>{
+public interface AreaRepository extends JpaRepository<Area, Long>{
 
 }
