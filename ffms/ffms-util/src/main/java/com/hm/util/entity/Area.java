@@ -17,7 +17,7 @@ public class Area implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idArea;
+	private Long idArea;
 
 	private String areaName;
 
@@ -54,11 +54,11 @@ public class Area implements Serializable {
 	public Area() {
 	}
 
-	public Integer getIdArea() {
+	public Long getIdArea() {
 		return this.idArea;
 	}
 
-	public void setIdArea(Integer idArea) {
+	public void setIdArea(Long idArea) {
 		this.idArea = idArea;
 	}
 
@@ -118,6 +118,13 @@ public class Area implements Serializable {
 		this.user2 = user2;
 	}
 
+	@Override
+	public String toString() {
+		return "Area [idArea=" + idArea + ", areaName=" + areaName + ", createdOn=" + createdOn + ", modifiedOn="
+				+ modifiedOn + ", branch=" + branch + ", status=" + status + ", createdByUser=" + createdByUser
+				+ ", user2=" + user2 + "]";
+	}
+
 /*	public List<Customer> getCustomers() {
 		return this.customers;
 	}
@@ -139,5 +146,8 @@ public class Area implements Serializable {
 
 		return customer;
 	}*/
+	
+	
+	
 
 }

@@ -3,7 +3,7 @@ package com.hm.util.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
 
 
 /**
@@ -16,7 +16,7 @@ public class City implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idCity;
 
 	private String cityName;
@@ -131,6 +131,12 @@ public class City implements Serializable {
 		this.user2 = user2;
 	}
 
+	@Override
+	public String toString() {
+		return "City [idCity=" + idCity + ", cityName=" + cityName + ", createdOn=" + createdOn + ", modifiedOn="
+				+ modifiedOn + "]";
+	}
+
 /*	public List<Customer> getCustomers() {
 		return this.customers;
 	}
@@ -152,5 +158,7 @@ public class City implements Serializable {
 
 		return customer;
 	}*/
+	
+	
 
 }
