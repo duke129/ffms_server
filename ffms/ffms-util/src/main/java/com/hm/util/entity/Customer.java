@@ -242,8 +242,11 @@ public class Customer implements Serializable {
 				+ communicationAdderss + ", createdOn=" + createdOn + ", customerType=" + customerType + ", emailId="
 				+ emailId + ", firstName=" + firstName + ", lastName=" + lastName + ", mobileNumber=" + mobileNumber
 				+ ", modifiedOn=" + modifiedOn + ", title=" + title + ", area=" + area + ", branch=" + branch
-				+ ", city=" + city + ", statusBean=" + statusBean + ", user1=" + user1 + ", user2=" + user2 + "]";
+				+ ", city=" + city + ", statusBean=" + statusBean + ", createdByUserId=" + createdByUserId
+				+ ", modifiedByUserId=" + modifiedByUserId + "]";
 	}
+
+
 
 	/*public List<Ticket> getTickets() {
 		return this.tickets;

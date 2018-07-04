@@ -19,8 +19,8 @@ public class CustomerVo {
 	private String customerOfficeNumber;
 	private String customerEmailId;
 	private String customerAternateEmailId;
-	private String customerCommunicationAddress;
-	private String customerCurrentAddress;
+	private AddressVo customerCommunicationAddress;
+	private AddressVo customerCurrentAddress;
 	private Long cityId;
 	private Long branchId;
 	private Long areaId;
@@ -79,16 +79,16 @@ public class CustomerVo {
 	public void setCustomerAternateEmailId(String customerAternateEmailId) {
 		this.customerAternateEmailId = customerAternateEmailId;
 	}
-	public String getCustomerCommunicationAddress() {
+	public AddressVo getCustomerCommunicationAddress() {
 		return customerCommunicationAddress;
 	}
-	public void setCustomerCommunicationAddress(String customerCommunicationAddress) {
+	public void setCustomerCommunicationAddress(AddressVo customerCommunicationAddress) {
 		this.customerCommunicationAddress = customerCommunicationAddress;
 	}
-	public String getCustomerCurrentAddress() {
+	public AddressVo getCustomerCurrentAddress() {
 		return customerCurrentAddress;
 	}
-	public void setCustomerCurrentAddress(String customerCurrentAddress) {
+	public void setCustomerCurrentAddress(AddressVo customerCurrentAddress) {
 		this.customerCurrentAddress = customerCurrentAddress;
 	}
 	public Long getCityId() {

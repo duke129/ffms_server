@@ -16,15 +16,7 @@ public class AddressVo {
 	private String longitude;
 	private String pincode;
 	private String apartmentName;
-	private String subAreaName;
-	private Integer areaId;
-	private String areaName;
-	private Integer branchId;
-	private String branchName;
-	private Integer cityId;
-	private String cityName;
-	private String stateName;
-	private String country;
+	
 	public String getAddress1() {
 		return address1;
 	}
@@ -67,60 +59,14 @@ public class AddressVo {
 	public void setApartmentName(String apartmentName) {
 		this.apartmentName = apartmentName;
 	}
-	public String getSubAreaName() {
-		return subAreaName;
+	
+	@Override
+	public String toString() {
+		return "AddressVo [address1=" + address1 + ", address2=" + address2 + ", landmark=" + landmark + ", latitude="
+				+ latitude + ", longitude=" + longitude + ", pincode=" + pincode + ", apartmentName=" + apartmentName
+				+ "]";
 	}
-	public void setSubAreaName(String subAreaName) {
-		this.subAreaName = subAreaName;
-	}
-	public Integer getAreaId() {
-		return areaId;
-	}
-	public void setAreaId(Integer areaId) {
-		this.areaId = areaId;
-	}
-	public String getAreaName() {
-		return areaName;
-	}
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
-	}
-	public Integer getBranchId() {
-		return branchId;
-	}
-	public void setBranchId(Integer branchId) {
-		this.branchId = branchId;
-	}
-	public String getBranchName() {
-		return branchName;
-	}
-	public void setBranchName(String branchName) {
-		this.branchName = branchName;
-	}
-	public Integer getCityId() {
-		return cityId;
-	}
-	public void setCityId(Integer cityId) {
-		this.cityId = cityId;
-	}
-	public String getCityName() {
-		return cityName;
-	}
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
-	}
-	public String getStateName() {
-		return stateName;
-	}
-	public void setStateName(String stateName) {
-		this.stateName = stateName;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
+	
 	
 	
 	

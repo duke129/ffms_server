@@ -23,6 +23,8 @@ import com.hm.util.entity.Customer;
 import com.hm.util.entity.Status;
 import com.hm.util.entity.Ticket;
 import com.hm.util.entity.User;
+import com.hm.util.model.APIResponse;
+import com.hm.util.model.BasicInfoUpdate;
 import com.hm.util.model.DashBoardSummaryCountVo;
 import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
@@ -58,7 +60,9 @@ public class TicketManagerImpl implements TicketManager {
 	}
 
 	/**
-	 * 
+	 * @author kiran
+	 * @param id
+	 * Get detailed view of ticket
 	 */
 	@Override
 	public List<TicketDetails> getTicketDetails(Long id) {
@@ -66,12 +70,20 @@ public class TicketManagerImpl implements TicketManager {
 		return ticketDAO.getTicketDetails(id);
 	}
 
+	/**
+	 * @author kiran
+	 * Get Ticket Summary details for list view
+	 */
 	@Override
 	public List<TicketCardViewData> getTicketSummary() {
 
 		return ticketDAO.getTicketSummary();
 	}
 
+	/**
+	 * @author kiran
+	 * get DashBoard summary count 
+	 */
 	@Override
 	public List<DashBoardSummaryCountVo> getDashBoardSummary() {
 		
@@ -109,12 +121,51 @@ public class TicketManagerImpl implements TicketManager {
 		return dashboardCountLists;
 	}
 
+	/**
+	 * generate random number between 0 to 100
+	 * @return random count
+	 */
 	private int generateRandomNumber() {
 		
-		//Create random number 0 - 99
 		double randNumber = Math.random();
 	    double count  =  randNumber * 100;
 		return (int)count;
+	}
+
+	/**
+	 * @author kiran
+	 * @param basicInfoUpdate
+	 * update basic details of customer
+	 * 
+	 */
+	@Override
+	public APIResponse basicInfoUpdate(BasicInfoUpdate basicInfoUpdate) {
+		
+		if(basicInfoUpdate != null)
+		{
+			int result = ticketDAO.updateTicket(basicInfoUpdate);
+			
+			if(result > 0)
+			{
+				APIResponse apiResponse = new APIResponse();
+				apiResponse.setStatusId(200);
+				apiResponse.setStatusMessage("Successfully updated");
+				
+				return apiResponse;
+			}
+			else
+			{
+				APIResponse apiResponse = new APIResponse();
+				apiResponse.setStatusId(302);
+				apiResponse.setStatusMessage("Updation Failed");
+				return apiResponse;
+			}
+		}
+		
+		APIResponse apiResponse = new APIResponse();
+		apiResponse.setStatusId(303);
+		apiResponse.setStatusMessage("Request body can't be null");
+		return apiResponse;
 	}
 
 }

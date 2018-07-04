@@ -5,12 +5,7 @@ package com.hm.ticket.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hm.dao.mysql.status.StatusRepository;
 import com.hm.ticket.manager.TicketManager;
-import com.hm.util.entity.Status;
-import com.hm.util.entity.Ticket;
+import com.hm.util.model.APIResponse;
+import com.hm.util.model.BasicInfoUpdate;
 import com.hm.util.model.DashBoardSummaryCountVo;
 import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
@@ -45,9 +39,7 @@ public class TicketController {
 	@PostMapping("create")
 	public String createTicket(@RequestBody ProspectCreation prospectCreation)
 	{
-		 boolean result = ticketManager.createTicket(prospectCreation);
-		 
-		 HttpHeaders headers = new HttpHeaders();
+		 boolean result = ticketManager.createTicket(prospectCreation);	
 		 
 		 if(result)
 		 {
@@ -55,8 +47,6 @@ public class TicketController {
 		 }
 		 else
 			 return "Failed to create";
-		
-		
 		
 	}
 	
@@ -79,6 +69,13 @@ public class TicketController {
 	public List<DashBoardSummaryCountVo> getDashBoardSummary()
 	{
 		return ticketManager.getDashBoardSummary();
+	}
+	
+	@CrossOrigin
+	@PostMapping("basic-info-update")
+	public APIResponse  basicInfoUpdate(@RequestBody BasicInfoUpdate basicInfoUpdate)
+	{
+		return ticketManager.basicInfoUpdate(basicInfoUpdate);
 	}
 
 }
