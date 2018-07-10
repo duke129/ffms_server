@@ -172,13 +172,13 @@ public class TicketDaoImpl  implements TicketDao {
 		
 		Customer customer = new  Customer();
 		
-		customer.setTitle(prospectCreation.getCustomerTittle());
-		customer.setFirstName(prospectCreation.getCustomerFirstName());
-		customer.setLastName(prospectCreation.getCustomerLastName());
-		customer.setMobileNumber(prospectCreation.getCustomerMobileNumber());
-		customer.setAlternativeMobileNo(prospectCreation.getCustomerAternateMobileNumber());
-		customer.setEmailId(prospectCreation.getCustomerEmailId());
-		customer.setCommunicationAdderss(GenericUtil.addressParserObjectToString(prospectCreation.getCustomerCommunicationAddress()));
+		customer.setTitle(prospectCreation.getTitle());
+		customer.setFirstName(prospectCreation.getFirstName());
+		customer.setLastName(prospectCreation.getLastName());
+		customer.setMobileNumber(prospectCreation.getMobileNumber());
+		customer.setAlternativeMobileNo(prospectCreation.getAlternateMobileNumber());
+		customer.setEmailId(prospectCreation.getEmailId());
+		customer.setCommunicationAdderss(GenericUtil.addressParserObjectToString(prospectCreation.getCommunicationAddress()));
 		customer.setCity(cityRepository.findById(1l).get());
 		customer.setBranch(branchRepository.findById(1l).get());
 		customer.setArea(areaRepository.findById(1L).get());
