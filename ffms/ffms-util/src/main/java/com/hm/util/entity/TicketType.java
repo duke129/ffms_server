@@ -16,7 +16,7 @@ public class TicketType implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int idTicketType;
+	private Integer idTicketType;
 
 	private String ticketType;
 
@@ -24,19 +24,19 @@ public class TicketType implements Serializable {
 	@OneToMany(mappedBy="ticketType")
 	private List<Ticket> tickets;*/
 
-	//bi-directional many-to-one association to Status
+	/*//bi-directional many-to-one association to Status
 	@ManyToOne
 	@JoinColumn(name="status")
-	private Status statusBean;
+	private Status statusBean;*/
 
 	public TicketType() {
 	}
 
-	public int getIdTicketType() {
+	public Integer getIdTicketType() {
 		return this.idTicketType;
 	}
 
-	public void setIdTicketType(int idTicketType) {
+	public void setIdTicketType(Integer idTicketType) {
 		this.idTicketType = idTicketType;
 	}
 
@@ -46,6 +46,11 @@ public class TicketType implements Serializable {
 
 	public void setTicketType(String ticketType) {
 		this.ticketType = ticketType;
+	}
+
+	@Override
+	public String toString() {
+		return "TicketType [idTicketType=" + idTicketType + ", ticketType=" + ticketType + "]";
 	}
 
 	/*public List<Ticket> getTickets() {
@@ -70,12 +75,15 @@ public class TicketType implements Serializable {
 		return ticket;
 	}
 */
-	public Status getStatusBean() {
+	/*public Status getStatusBean() {
 		return this.statusBean;
 	}
 
 	public void setStatusBean(Status statusBean) {
 		this.statusBean = statusBean;
 	}
-
+*/
+	
+	
+	
 }

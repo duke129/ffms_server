@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.hm.dao.mysql.area.AreaRepository;
 import com.hm.dao.mysql.branch.BranchRepository;
@@ -19,6 +20,7 @@ import com.hm.dao.mysql.ticket.TicketDao;
 import com.hm.dao.mysql.ticket.TicketRepository;
 import com.hm.dao.mysql.ticket.TicketTypeRepository;
 import com.hm.dao.mysql.user.UserRepository;
+import com.hm.util.FFMSConstant;
 import com.hm.util.entity.Customer;
 import com.hm.util.entity.Status;
 import com.hm.util.entity.Ticket;
@@ -75,9 +77,9 @@ public class TicketManagerImpl implements TicketManager {
 	 * Get Ticket Summary details for list view
 	 */
 	@Override
-	public List<TicketCardViewData> getTicketSummary() {
+	public List<TicketCardViewData> getTicketSummary(Integer status) {
 
-		return ticketDAO.getTicketSummary();
+		return ticketDAO.getTicketSummary(status);
 	}
 
 	/**
@@ -85,40 +87,14 @@ public class TicketManagerImpl implements TicketManager {
 	 * get DashBoard summary count 
 	 */
 	@Override
-	public List<DashBoardSummaryCountVo> getDashBoardSummary() {
+	public APIResponse getDashBoardSummary() {
 		
-		List<DashBoardSummaryCountVo> dashboardCountLists = new ArrayList<DashBoardSummaryCountVo>();
+		APIResponse response = new APIResponse();
+		response.setStatusId(200);
+		response.setStatusMessage("Success");
+		response.setData(ticketDAO.getDashBoardSummary());
 		
-		DashBoardSummaryCountVo newLeadsDashBoardSummaryCountVo = new DashBoardSummaryCountVo();
-		
-		int newLeadsCount = generateRandomNumber();
-		newLeadsDashBoardSummaryCountVo.setStatusName("new-leads");
-		newLeadsDashBoardSummaryCountVo.setTotalCounts(newLeadsCount);
-		dashboardCountLists.add(newLeadsDashBoardSummaryCountVo);
-		
-		
-		DashBoardSummaryCountVo serviceRequestDashBoardSummaryCountVo = new DashBoardSummaryCountVo();
-		
-		int serviceRequestCount = generateRandomNumber();
-		serviceRequestDashBoardSummaryCountVo.setStatusName("service-request");
-		serviceRequestDashBoardSummaryCountVo.setTotalCounts(serviceRequestCount);
-		dashboardCountLists.add(serviceRequestDashBoardSummaryCountVo);
-		
-		DashBoardSummaryCountVo progressDashBoardSummaryCountVo = new DashBoardSummaryCountVo();
-		
-		int progressCount = generateRandomNumber();
-		progressDashBoardSummaryCountVo.setStatusName("in-progress");
-		progressDashBoardSummaryCountVo.setTotalCounts(progressCount);
-		dashboardCountLists.add(progressDashBoardSummaryCountVo);
-		
-        DashBoardSummaryCountVo totalDashBoardSummaryCountVo = new DashBoardSummaryCountVo();
-		
-		int totalCount = newLeadsCount + progressCount + serviceRequestCount;
-		totalDashBoardSummaryCountVo.setStatusName("total-tickets");
-		totalDashBoardSummaryCountVo.setTotalCounts(totalCount);
-		dashboardCountLists.add(totalDashBoardSummaryCountVo);
-		
-		return dashboardCountLists;
+		return response;
 	}
 
 	/**
@@ -143,7 +119,7 @@ public class TicketManagerImpl implements TicketManager {
 		
 		if(basicInfoUpdate != null)
 		{
-			int result = ticketDAO.updateTicket(basicInfoUpdate);
+			int result = ticketDAO.basicInfoUpdate(basicInfoUpdate);
 			
 			if(result > 0)
 			{

@@ -39,16 +39,27 @@ public class TicketController {
 	
 	@CrossOrigin
 	@PostMapping("create")
-	public String createTicket(@RequestBody ProspectCreation prospectCreation)
+	public APIResponse createTicket(@RequestBody ProspectCreation prospectCreation)
 	{
 		 boolean result = ticketManager.createTicket(prospectCreation);	
 		 
+		 APIResponse response = new APIResponse();
+		 
 		 if(result)
 		 {
-			 return  "Created Successfully";
+			 response.setStatusId(200);
+			 response.setStatusMessage("Created Successfully");
+			 
+			 return  response;
 		 }
 		 else
-			 return "Failed to create";
+		 {
+			 response.setStatusId(203);
+			 response.setStatusMessage("Failed to create");
+			 
+			 return response;
+		 }
+			
 		
 	}
 	
@@ -60,15 +71,15 @@ public class TicketController {
 	}
 	
 	@CrossOrigin
-	@GetMapping("list-view")
-	public List<TicketCardViewData> getTicketSummary()
+	@GetMapping("list-view/{status}")
+	public List<TicketCardViewData> getTicketSummary(@PathVariable("status") Integer status)
 	{
-		return ticketManager.getTicketSummary();
+		return ticketManager.getTicketSummary(status);
 	}
 	
 	@CrossOrigin
 	@GetMapping("dashboard-count")
-	public List<DashBoardSummaryCountVo> getDashBoardSummary()
+	public APIResponse getDashBoardSummary()
 	{
 		return ticketManager.getDashBoardSummary();
 	}

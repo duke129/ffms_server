@@ -5,6 +5,7 @@ package com.hm.util;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,16 +21,31 @@ import com.hm.util.model.AddressVo;
  */
 public class GenericUtil {
 	
-	
+	public static String DATE_FORMATE = "dd/MM/yyyy HH:mm:ss" ;
 	
 	public static String convertDateToStringFromate(Date date) {
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat(DATE_FORMATE);
 		
 		//to convert Date to String, use format method of SimpleDateFormat class.
 		String strDate = dateFormat.format(date);
 		
 		return strDate;
+	}
+	
+	public static Date convertStringToDateFromate(String date) {
+		
+		try {
+
+			Date convertedDate = new SimpleDateFormat(DATE_FORMATE).parse(date);
+			
+			return convertedDate;
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static AddressVo addressParserToObject(String address)

@@ -2,6 +2,7 @@ package com.hm.util.model;
 
 public class DashBoardSummaryCountVo {
 
+	private int statusId;
 	private String statusName;
 	private int totalCounts;
 	
@@ -19,6 +20,16 @@ public class DashBoardSummaryCountVo {
 	
 	public void setTotalCounts(int totalCounts) {
 		this.totalCounts = totalCounts;
+	}
+	
+	
+
+	public int getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
 	@Override

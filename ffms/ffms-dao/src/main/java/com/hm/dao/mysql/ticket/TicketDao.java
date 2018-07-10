@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.hm.util.entity.Ticket;
 import com.hm.util.model.BasicInfoUpdate;
+import com.hm.util.model.DashBoardSummaryCountVo;
 import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
@@ -23,8 +24,10 @@ public interface TicketDao {
 	
 	List<TicketDetails> getTicketDetails(Long id);
 	
-	List<TicketCardViewData> getTicketSummary();
+	List<TicketCardViewData> getTicketSummary(Integer status);
 	
-	int updateTicket(BasicInfoUpdate basicInfoUpdate);
+	int basicInfoUpdate(BasicInfoUpdate basicInfoUpdate);
+	
+	List<DashBoardSummaryCountVo> getDashBoardSummary();
 
 }

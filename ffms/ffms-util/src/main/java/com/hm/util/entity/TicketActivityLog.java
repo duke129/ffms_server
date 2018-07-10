@@ -16,7 +16,7 @@ public class TicketActivityLog implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String id;
+	private Long id;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date activityCreatedOn;
@@ -24,6 +24,8 @@ public class TicketActivityLog implements Serializable {
 	private java.math.BigInteger activityDoneBy;
 
 	private java.math.BigInteger ticketId;
+	
+	private int status;
 
 	//bi-directional many-to-one association to Activity
 	@ManyToOne
@@ -33,11 +35,11 @@ public class TicketActivityLog implements Serializable {
 	public TicketActivityLog() {
 	}
 
-	public String getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -72,5 +74,21 @@ public class TicketActivityLog implements Serializable {
 	public void setActivity(Activity activity) {
 		this.activity = activity;
 	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	@Override
+	public String toString() {
+		return "TicketActivityLog [id=" + id + ", activityCreatedOn=" + activityCreatedOn + ", activityDoneBy="
+				+ activityDoneBy + ", ticketId=" + ticketId + ", status=" + status + ", activity=" + activity + "]";
+	}
+	
+	
 
 }

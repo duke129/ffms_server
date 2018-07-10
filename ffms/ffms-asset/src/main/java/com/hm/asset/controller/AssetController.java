@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hm.asset.manager.AssetManager;
+import com.hm.util.model.APIResponse;
 import com.hm.util.model.AssetVo;
 
 @RestController
@@ -25,5 +26,6 @@ public class AssetController {
 		List<AssetVo> listOfAsset = assetManager.findAllAsset();
 		return listOfAsset;
 	}
+	
 
 }

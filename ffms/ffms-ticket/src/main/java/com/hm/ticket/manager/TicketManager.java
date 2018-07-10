@@ -5,10 +5,9 @@ package com.hm.ticket.manager;
 
 import java.util.List;
 
-import com.hm.util.entity.Ticket;
+
 import com.hm.util.model.APIResponse;
 import com.hm.util.model.BasicInfoUpdate;
-import com.hm.util.model.DashBoardSummaryCountVo;
 import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
@@ -23,9 +22,9 @@ public interface TicketManager {
 	
 	List<TicketDetails> getTicketDetails(Long id);
 	
-	List<TicketCardViewData> getTicketSummary();
+	List<TicketCardViewData> getTicketSummary(Integer status);
 	
-	List<DashBoardSummaryCountVo> getDashBoardSummary();
+	APIResponse getDashBoardSummary();
 	
 	APIResponse basicInfoUpdate(BasicInfoUpdate basicInfoUpdate);
 	

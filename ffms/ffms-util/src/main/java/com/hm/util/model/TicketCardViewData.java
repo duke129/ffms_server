@@ -1,6 +1,7 @@
 package com.hm.util.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class TicketCardViewData {
 	
@@ -11,6 +12,8 @@ public class TicketCardViewData {
 	private AddressVo customerAddress;
 	private Date ticketCreationDate;
 	private String committedETR;
+	private List<ActivityVo> activities;
+	
 	public Long getTicketId() {
 		return ticketId;
 	}
@@ -52,6 +55,15 @@ public class TicketCardViewData {
 	}
 	public void setCommittedETR(String committedETR) {
 		this.committedETR = committedETR;
+	}
+	
+	
+	
+	public List<ActivityVo> getActivities() {
+		return activities;
+	}
+	public void setActivities(List<ActivityVo> activities) {
+		this.activities = activities;
 	}
 	@Override
 	public String toString() {

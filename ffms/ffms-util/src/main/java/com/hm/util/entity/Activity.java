@@ -91,4 +91,12 @@ public class Activity implements Serializable {
 		return ticketActivityLog;
 	}
 
+	@Override
+	public String toString() {
+		return "Activity [id=" + id + ", activityName=" + activityName  + "]";
+	}
+
+	
+	
+
 }
