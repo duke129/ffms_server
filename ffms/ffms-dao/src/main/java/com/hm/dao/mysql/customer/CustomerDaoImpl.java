@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hm.util.entity.Customer;
+import com.hm.util.model.TitleDTO;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao{
@@ -25,6 +26,8 @@ public class CustomerDaoImpl implements CustomerDao{
 	CustomerRepository customerRepository;
 	
 	private static final String getCustomerData = "SELECT  * FROM Customer";
+	
+	private static final String GET_TILTLE_QUERY="select * from Title";
 	
 	@Override
 	public List<Customer> getAllCustomers() {
@@ -98,6 +101,22 @@ public class CustomerDaoImpl implements CustomerDao{
 		customerRepository.save(cos);
 		
 		return "Modified Success";
+	}
+
+	@Override
+	public List<TitleDTO> getTitles() {
+		
+		List<TitleDTO> titleList=new ArrayList<TitleDTO>();
+		
+		List<Object[]> titlelist = entityManager.createNativeQuery(GET_TILTLE_QUERY).getResultList();
+		
+		for (Object[] objects : titlelist) {
+			TitleDTO titleDTO=new TitleDTO();
+			titleDTO.setId(String.valueOf(objects[0]));
+			titleDTO.setName(String.valueOf(objects[1]));
+			titleList.add(titleDTO);
+		}
+		return titleList;
 	}
 
 }
