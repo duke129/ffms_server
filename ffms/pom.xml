@@ -86,5 +86,7 @@
 		<module>ffms-starter</module>
 		<module>ffms-sr-flow</module>
         <module>ffms-order</module>
+        <module>ffms-productSpecification</module>
+        <module>ffms-product</module>
   </modules>
 </project>

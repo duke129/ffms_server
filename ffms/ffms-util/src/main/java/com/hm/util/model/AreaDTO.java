@@ -2,14 +2,26 @@ package com.hm.util.model;
 
 public class AreaDTO {
 	
-	private Long areaId;
+	private String areaId;
 	private String areaName;
 	private String branchName;
 	private String branchId;
-	private String status;
-	private String areaCode;
-	
-	
+	private String statusId;
+	private String Code;
+	private String cityId;
+	private String cityName;
+	public String getAreaId() {
+		return areaId;
+	}
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
+	}
+	public String getAreaName() {
+		return areaName;
+	}
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
 	public String getBranchName() {
 		return branchName;
 	}
@@ -22,35 +34,39 @@ public class AreaDTO {
 	public void setBranchId(String branchId) {
 		this.branchId = branchId;
 	}
-	public String getStatus() {
-		return status;
+	
+	
+	public String getStatusId() {
+		return statusId;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
 	}
-	public String getAreaCode() {
-		return areaCode;
+	public String getCode() {
+		return Code;
 	}
-	public void setAreaCode(String areaCode) {
-		this.areaCode = areaCode;
+	public void setCode(String code) {
+		Code = code;
 	}
-	public Long getAreaId() {
-		return areaId;
+	public String getCityId() {
+		return cityId;
 	}
-	public void setAreaId(Long areaId) {
-		this.areaId = areaId;
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
 	}
-	public String getAreaName() {
-		return areaName;
+	public String getCityName() {
+		return cityName;
 	}
-	public void setAreaName(String areaName) {
-		this.areaName = areaName;
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
 	}
 	@Override
 	public String toString() {
 		return "AreaDTO [areaId=" + areaId + ", areaName=" + areaName + ", branchName=" + branchName + ", branchId="
-				+ branchId + ", status=" + status + ", areaCode=" + areaCode + "]";
+				+ branchId + ", statusId=" + statusId + ", Code=" + Code + ", cityId=" + cityId + ", cityName="
+				+ cityName + "]";
 	}
+	
 	
 	
 	

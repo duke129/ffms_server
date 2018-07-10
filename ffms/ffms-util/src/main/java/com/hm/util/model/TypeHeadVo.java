@@ -3,7 +3,8 @@ package com.hm.util.model;
 public class TypeHeadVo {
 	
 	private Long id;
-	private String Name;
+	private String name;
+	
 	public Long getId() {
 		return id;
 	}
@@ -11,16 +12,17 @@ public class TypeHeadVo {
 		this.id = id;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
-	
 	@Override
 	public String toString() {
-		return "TypeHeadVo [id=" + id + ", Name=" + Name + "]";
+		return "TypeHeadVo [id=" + id + ", name=" + name + "]";
 	}
+	
+	
 	
 	
 

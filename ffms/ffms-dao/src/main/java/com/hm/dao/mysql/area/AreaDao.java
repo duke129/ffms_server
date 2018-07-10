@@ -17,5 +17,7 @@ public interface AreaDao {
 	void saveArea(AreaDTO areaDTO);
 	
 	List<Area> findAllArea();
+	
+	List<AreaDTO> getAreaByBranchId(Long id);
 
 }

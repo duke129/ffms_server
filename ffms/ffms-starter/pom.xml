@@ -79,5 +79,15 @@
     <artifactId>ffms-order</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </dependency>
+  <dependency>
+    <groupId>com.hm.ffms</groupId>
+    <artifactId>ffms-productSpecification</artifactId>
+     <version>0.0.1-SNAPSHOT</version>
+  </dependency>
+  <dependency>
+    <groupId>com.hm.ffms</groupId>
+   <artifactId>ffms-product</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </dependency>
   </dependencies>
 </project>

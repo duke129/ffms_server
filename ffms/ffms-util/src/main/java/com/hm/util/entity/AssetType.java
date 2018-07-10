@@ -43,26 +43,10 @@ public class AssetType implements Serializable {
 		this.assetTypeDescription = assetTypeDescription;
 	}
 
-	/*public List<Asset> getAssets() {
-		return this.assets;
+	@Override
+	public String toString() {
+		return "AssetType [idAssetType=" + idAssetType + ", assetTypeDescription=" + assetTypeDescription + "]";
 	}
 
-	public void setAssets(List<Asset> assets) {
-		this.assets = assets;
-	}
-
-	public Asset addAsset(Asset asset) {
-		getAssets().add(asset);
-		asset.setAssetType(this);
-
-		return asset;
-	}
-
-	public Asset removeAsset(Asset asset) {
-		getAssets().remove(asset);
-		asset.setAssetType(null);
-
-		return asset;
-	}*/
-
+	
 }

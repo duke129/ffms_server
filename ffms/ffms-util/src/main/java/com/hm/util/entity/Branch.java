@@ -26,10 +26,24 @@ public class Branch implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
+	
+	private String code;
 
 	//bi-directional many-to-one association to Area
 	/*@OneToMany(mappedBy="branch")
 	private List<Area> areas;*/
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	//bi-directional many-to-one association to City
 	@ManyToOne
@@ -147,33 +161,12 @@ public class Branch implements Serializable {
 	@Override
 	public String toString() {
 		return "Branch [idBranch=" + idBranch + ", branchName=" + branchName + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", city=" + city + ", statusBean=" + statusBean + ", user1=" + user1
-				+ ", user2=" + user2 + "]";
+				+ ", modifiedOn=" + modifiedOn + ", code=" + code + ", city=" + city + ", statusBean=" + statusBean
+				+ ", user1=" + user1 + ", user2=" + user2 + "]";
 	}
 
-	/*public List<Customer> getCustomers() {
-		return this.customers;
-	}
-
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
-
-	public Customer addCustomer(Customer customer) {
-		getCustomers().add(customer);
-		customer.setBranch(this);
-
-		return customer;
-	}
-
-	public Customer removeCustomer(Customer customer) {
-		getCustomers().remove(customer);
-		customer.setBranch(null);
-
-		return customer;
-	}*/
 	
-	
+
 	
 
 }

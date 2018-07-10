@@ -6,6 +6,7 @@ package com.hm.dao.mysql.branch;
 import java.util.List;
 
 import com.hm.util.entity.Branch;
+import com.hm.util.model.AreaDTO;
 import com.hm.util.model.BranchDTO;
 
 /**
@@ -17,6 +18,7 @@ public interface BranchDao {
 	void saveBranch(BranchDTO branchDto);
 	
 	List<Branch> findAllBranch();
+	List<BranchDTO> getBranchByCityId(Long id);
 	
-
+	
 }

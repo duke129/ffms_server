@@ -20,6 +20,32 @@ public class Product implements Serializable {
 	private String idProduct;
 
 	private BigInteger assetId;
+	
+	private Long assestTypeId;
+	
+	
+	
+	//bi-directional many-to-one association to AssetType
+		@ManyToOne(fetch=FetchType.LAZY)
+		@JoinColumn(name="idAssetType")
+		private AssetType assetType;
+
+
+	public AssetType getAssetType() {
+			return assetType;
+		}
+
+		public void setAssetType(AssetType assetType) {
+			this.assetType = assetType;
+		}
+
+	public Long getAssestTypeId() {
+		return assestTypeId;
+	}
+
+	public void setAssestTypeId(Long assestTypeId) {
+		this.assestTypeId = assestTypeId;
+	}
 
 	private String description;
 
@@ -28,6 +54,16 @@ public class Product implements Serializable {
 	private String name;
 
 	private String videoPath;
+	
+	private String price;
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
 
 	//bi-directional many-to-one association to ProductSpecification
 	@OneToMany(mappedBy="product")
@@ -106,4 +142,17 @@ public class Product implements Serializable {
 		return productSpecification;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [idProduct=" + idProduct + ", assetId=" + assetId + ", assestTypeId=" + assestTypeId
+				+ ", assetType=" + assetType + ", description=" + description + ", imgPath=" + imgPath + ", name="
+				+ name + ", videoPath=" + videoPath + ", price=" + price + ", productSpecifications="
+				+ productSpecifications + "]";
+	}
+
+	
+	
+	
+	
+	
 }

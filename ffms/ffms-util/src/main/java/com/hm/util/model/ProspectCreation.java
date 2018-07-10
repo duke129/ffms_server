@@ -14,7 +14,6 @@ public class ProspectCreation {
 	private String ticketDescription;
 	private Long ticketTypeId;
 	private Date prefferdCallTime;
-	
 	private CustomerVo customer;
 
 	public String getTicketDescription() {

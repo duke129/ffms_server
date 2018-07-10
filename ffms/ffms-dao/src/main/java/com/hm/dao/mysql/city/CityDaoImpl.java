@@ -41,16 +41,16 @@ public class CityDaoImpl implements CityDao {
 			city.setUser1(user);
 			city.setUser2(user);
 			Status status=new Status();
-			if(cityDto.getStatusBean().equalsIgnoreCase("Enable")) {
+			if(cityDto.getStatusId().equalsIgnoreCase("Enable")) {
 				status.setIdStatus(1);
 				
 			}else {
 				status.setIdStatus(0);
 			}
 			
-			
+			city.setCode(cityDto.getCode());
 			city.setStatusBean(status);
-			System.out.println("************"+city);
+			System.out.println("City value that going to be save into databases ************"+city);
 			cityRepository.save(city);
 			
 		} catch (Exception e) {

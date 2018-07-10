@@ -1,20 +1,21 @@
 package com.hm.util.model;
 
-import com.hm.util.entity.City;
-import com.hm.util.entity.Status;
+
 
 public class BranchDTO {
 	
-	private String idBranch;
+	private String branchId;
 	private String branchName;
-	private City city;
-	private Status statusBean;
+    private String cityId;
+    private String cityName;
+    private String statusId;
+	private String code;
 	
-	public String getIdBranch() {
-		return idBranch;
+	public String getBranchId() {
+		return branchId;
 	}
-	public void setIdBranch(String idBranch) {
-		this.idBranch = idBranch;
+	public void setBranchId(String branchId) {
+		this.branchId = branchId;
 	}
 	public String getBranchName() {
 		return branchName;
@@ -22,25 +23,40 @@ public class BranchDTO {
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
 	}
-	public City getCity() {
-		return city;
+	public String getCityId() {
+		return cityId;
 	}
-	public void setCity(City city) {
-		this.city = city;
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
 	}
-	public Status getStatusBean() {
-		return statusBean;
+	public String getCityName() {
+		return cityName;
 	}
-	public void setStatusBean(Status statusBean) {
-		this.statusBean = statusBean;
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	
+	public String getStatusId() {
+		return statusId;
+	}
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	@Override
 	public String toString() {
-		return "BranchDTO [idBranch=" + idBranch + ", branchName=" + branchName + ", city=" + city + ", statusBean="
-				+ statusBean + "]";
+		return "BranchDTO [branchId=" + branchId + ", branchName=" + branchName + ", cityId=" + cityId + ", cityName="
+				+ cityName + ", statusId=" + statusId + ", code=" + code + "]";
 	}
 	
 	
-		
-
+	
+	
+	
 }

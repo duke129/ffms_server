@@ -20,6 +20,20 @@ public class City implements Serializable {
 	private Long idCity;
 
 	private String cityName;
+	
+	private String code;
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -45,6 +59,16 @@ public class City implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="modifiedByUserId")
 	private User user2;
+	
+	private String state;
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
 
 	/*//bi-directional many-to-one association to Customer
 	@OneToMany(mappedBy="city")
@@ -85,28 +109,6 @@ public class City implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-/*	public List<Branch> getBranches() {
-		return this.branches;
-	}
-
-	public void setBranches(List<Branch> branches) {
-		this.branches = branches;
-	}
-
-	public Branch addBranch(Branch branch) {
-		getBranches().add(branch);
-		branch.setCity(this);
-
-		return branch;
-	}
-
-	public Branch removeBranch(Branch branch) {
-		getBranches().remove(branch);
-		branch.setCity(null);
-
-		return branch;
-	}*/
-
 	public Status getStatusBean() {
 		return this.statusBean;
 	}
@@ -133,32 +135,13 @@ public class City implements Serializable {
 
 	@Override
 	public String toString() {
-		return "City [idCity=" + idCity + ", cityName=" + cityName + ", createdOn=" + createdOn + ", modifiedOn="
-				+ modifiedOn + "]";
+		return "City [idCity=" + idCity + ", cityName=" + cityName + ", code=" + code + ", createdOn=" + createdOn
+				+ ", modifiedOn=" + modifiedOn + ", statusBean=" + statusBean + ", user1=" + user1 + ", user2=" + user2
+				+ ", state=" + state + "]";
 	}
 
-/*	public List<Customer> getCustomers() {
-		return this.customers;
-	}
-
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
-
-	public Customer addCustomer(Customer customer) {
-		getCustomers().add(customer);
-		customer.setCity(this);
-
-		return customer;
-	}
-
-	public Customer removeCustomer(Customer customer) {
-		getCustomers().remove(customer);
-		customer.setCity(null);
-
-		return customer;
-	}*/
 	
+
 	
 
 }

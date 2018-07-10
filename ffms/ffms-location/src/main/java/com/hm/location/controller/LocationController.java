@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,9 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.hm.location.manager.LocationManager;
+import com.hm.util.model.APIResponse;
 import com.hm.util.model.AreaDTO;
 import com.hm.util.model.BranchDTO;
 import com.hm.util.model.CityDTO;
+import com.hm.util.model.TypeHeadVo;
 
 /**
  * @author Pawan
@@ -132,5 +135,48 @@ public class LocationController {
         }
         return new ResponseEntity<List<AreaDTO>>(areaDTO, HttpStatus.OK);
     }
+    
+    
+    @RequestMapping(value = "/branchByCityId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public APIResponse getBranchByCityId(@PathVariable("id") String id) {
+        logger.info("Fetching Branch with id " + id);
+        List<TypeHeadVo> branchDTOList = locationService.getBranchDetailsByCityId(id);
+        APIResponse apiResponse=new APIResponse();
+        if (branchDTOList == null || branchDTOList.isEmpty()) {
+        	apiResponse.setStatusId(404);
+        	apiResponse.setStatusMessage("Record not found");
+        	apiResponse.setData(null);
+            return apiResponse;
+        }
+        
+        apiResponse.setStatusId(200);
+    	apiResponse.setStatusMessage("Successfully");
+    	apiResponse.setData(branchDTOList);
+    	
+        return apiResponse; 
+    }
 
+    
+    @RequestMapping(value = "/areaByBranchId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public APIResponse getAreaByBranchId(@PathVariable("id") String id) {
+        logger.info("Fetching Branch with id " + id);
+        List<TypeHeadVo> areaDTOList = locationService.getAreaDetailsByBranchId(id);
+        APIResponse apiResponse=new APIResponse();
+        if (areaDTOList == null || areaDTOList.isEmpty()) {
+        	apiResponse.setStatusId(404);
+        	apiResponse.setStatusMessage("Record not found");
+        	apiResponse.setData(null);
+            return apiResponse;
+        }
+        
+        apiResponse.setStatusId(200);
+    	apiResponse.setStatusMessage("Successfully");
+    	apiResponse.setData(areaDTOList);
+    	
+        return apiResponse; 
+    }
+
+    
+    
+    
 }

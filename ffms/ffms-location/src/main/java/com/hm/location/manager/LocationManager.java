@@ -8,6 +8,7 @@ import java.util.List;
 import com.hm.util.model.AreaDTO;
 import com.hm.util.model.BranchDTO;
 import com.hm.util.model.CityDTO;
+import com.hm.util.model.TypeHeadVo;
 
 /**
  * @author kiran
@@ -28,5 +29,12 @@ public interface LocationManager {
 	 List<BranchDTO>  findAllBranch();
 	 
 	 List<AreaDTO> findAllArea();
+	 
+	 BranchDTO findBranchById(String id);
+	 
+	 
+	 List<TypeHeadVo> getBranchDetailsByCityId(String cityId);
+	 
+	 List<TypeHeadVo> getAreaDetailsByBranchId(String branchId);
 
 }

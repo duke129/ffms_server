@@ -13,56 +13,55 @@ import com.hm.util.entity.Status;
  */
 public class CityDTO {
 
-	private Long idCity;
+	private String cityId;
 	private String cityName;
-	private Date createdOn;
-	private Date modifiedOn;
-	private String statusBean;
-
-	public Long getIdCity() {
-		return idCity;
+	private String statusId;
+	private String code;
+	private String state;
+	
+	
+	
+	public String getCityId() {
+		return cityId;
 	}
-
-	public void setIdCity(Long idCity) {
-		this.idCity = idCity;
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
 	}
-
 	public String getCityName() {
 		return cityName;
 	}
-
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
-
-	public Date getCreatedOn() {
-		return createdOn;
+	
+	
+	
+	public String getStatusId() {
+		return statusId;
 	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
 	}
-
-	public Date getModifiedOn() {
-		return modifiedOn;
+	public String getCode() {
+		return code;
 	}
-
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
+	public void setCode(String code) {
+		this.code = code;
 	}
-
-	public String getStatusBean() {
-		return statusBean;
+	public String getState() {
+		return state;
 	}
-
-	public void setStatusBean(String statusBean) {
-		this.statusBean = statusBean;
+	public void setState(String state) {
+		this.state = state;
 	}
-
 	@Override
 	public String toString() {
-		return "CityDTO [idCity=" + idCity + ", cityName=" + cityName + ", createdOn=" + createdOn + ", modifiedOn="
-				+ modifiedOn + ", statusBean=" + statusBean + "]";
+		return "CityDTO [cityId=" + cityId + ", cityName=" + cityName + ", statusId=" + statusId + ", code=" + code
+				+ ", state=" + state + "]";
 	}
+	
+	
 
+	
+	
 }

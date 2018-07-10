@@ -26,6 +26,16 @@ public class Asset implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String idAsset;
+	
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Lob
 	private String assetDescription;
@@ -34,6 +44,7 @@ public class Asset implements Serializable {
 	private Date createdDate;
 
 	private String installationLat;
+
 
 	private String installationLong;
 
@@ -151,34 +162,14 @@ public class Asset implements Serializable {
 		this.user2 = user2;
 	}
 
-	/*public List<Customer> getCustomers() {
-		return this.customers;
+	@Override
+	public String toString() {
+		return "Asset [idAsset=" + idAsset + ", name=" + name + ", assetDescription=" + assetDescription
+				+ ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", assetType=" + assetType
+				+ ", statusBean=" + statusBean + "]";
 	}
 
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
-
-	public List<Ticket> getTickets() {
-		return this.tickets;
-	}
-
-	public void setTickets(List<Ticket> tickets) {
-		this.tickets = tickets;
-	}
-
-	public Ticket addTicket(Ticket ticket) {
-		getTickets().add(ticket);
-		ticket.setAsset(this);
-
-		return ticket;
-	}
-
-	public Ticket removeTicket(Ticket ticket) {
-		getTickets().remove(ticket);
-		ticket.setAsset(null);
-
-		return ticket;
-	}*/
+	
+	
 
 }
