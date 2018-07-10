@@ -116,7 +116,8 @@ public class TicketDaoImpl  implements TicketDao {
 			+ "set c.title = :title , c.firstName = :firstName ,c.lastName = :lastName ,c.mobileNumber = :mobileNumber ,"
 			+ "c.alternativeMobileNo = :alternativeMobileNo , c.emailId = :emailId ,"
 			+ "c.communicationAdderss = :communicationAdderss , t.status = :status ,"
-			+ " t.preferedCallDate = :preferedCallDate , c.currentAddress = :currentAddress where t.idTicket = :ticketId";
+			+ " t.preferedCallDate = :preferedCallDate , c.currentAddress = :currentAddress , c.branchId = :branchId"
+			+ " c.areaId = :areaId where t.idTicket = :ticketId";
 	
 	/**
 	 * @author kiran
@@ -373,6 +374,8 @@ public class TicketDaoImpl  implements TicketDao {
 			.setParameter("status", FFMSConstant.IN_PROGRESS)
 			.setParameter("preferedCallDate", GenericUtil.convertStringToDateFromate(basicInfoUpdate.getPreferredCallTime()))
 			.setParameter("currentAddress", GenericUtil.addressParserObjectToString(basicInfoUpdate.getCurrentAddress()))
+			.setParameter("branchId", basicInfoUpdate.getBranchId())
+			.setParameter("areaId", basicInfoUpdate.getAreaId())
 			.setParameter("ticketId", basicInfoUpdate.getTicketId()).executeUpdate();
 			 
 			 if(result > 0)
