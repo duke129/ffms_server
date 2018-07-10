@@ -12,7 +12,7 @@ public class CustomerVo {
 	
 	private String title;
 	private String firstName;
-	private String middletName;
+	private String middleName;
 	private String lastName;
 	private String mobileNumber;
 	private String alternateMobileNumber;
@@ -37,10 +37,10 @@ public class CustomerVo {
 		this.firstName = firstName;
 	}
 	public String getMiddletName() {
-		return middletName;
+		return middleName;
 	}
 	public void setMiddletName(String middletName) {
-		this.middletName = middletName;
+		this.middleName = middletName;
 	}
 	public String getLastName() {
 		return lastName;

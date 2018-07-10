@@ -179,9 +179,9 @@ public class TicketDaoImpl  implements TicketDao {
 		customer.setAlternativeMobileNo(prospectCreation.getAlternateMobileNumber());
 		customer.setEmailId(prospectCreation.getEmailId());
 		customer.setCommunicationAdderss(GenericUtil.addressParserObjectToString(prospectCreation.getCommunicationAddress()));
-		customer.setCity(cityRepository.findById(1l).get());
-		customer.setBranch(branchRepository.findById(1l).get());
-		customer.setArea(areaRepository.findById(1L).get());
+		customer.setCity(cityRepository.findById(prospectCreation.getCityId()).get());
+		customer.setBranch(branchRepository.findById(prospectCreation.getBranchId()).get());
+		customer.setArea(areaRepository.findById(prospectCreation.getAreaId()).get());
 		customer.setCreatedOn(new Date());
 		customer.setModifiedOn(new Date());
 		Status status = statusRepository.findById(1).get();
