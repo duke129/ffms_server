@@ -29,5 +29,9 @@ public interface TicketDao {
 	int basicInfoUpdate(BasicInfoUpdate basicInfoUpdate);
 	
 	List<DashBoardSummaryCountVo> getDashBoardSummary();
+	
+	int closeTicket(String customerComments , Long ticketId);
+	
+	String getTicketCommentsByTicketId(Long ticketId);
 
 }

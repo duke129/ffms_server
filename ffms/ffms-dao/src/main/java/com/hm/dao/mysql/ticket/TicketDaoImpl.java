@@ -92,7 +92,7 @@ public class TicketDaoImpl  implements TicketDao {
 	 * @author kiran
 	 * query to fetch list view of tickets
 	 */
-	private static final String GET_CARD_VIEW_DATA = "select t.idTicket , t.createdOn , c.firstName , c.mobileNumber , c.communicationAdderss , t.ticketTypeId "
+	private static final String GET_CARD_VIEW_DATA = "select t.idTicket , t.createdOn , c.firstName , c.mobileNumber , c.communicationAdderss , t.ticketTypeId , t.tickectNo "
 			+ "from Ticket t inner join Customer c on c.id = t.idCustomer ";
 	
 	/**
@@ -103,7 +103,8 @@ public class TicketDaoImpl  implements TicketDao {
 			" a.idAsset , a.assetDescription , at.idAssetType , at.assetTypeDescription , a.installationLat ," + 
 			" a.installationLong , c.id , c.title , c.firstName ,c.lastName ,c.mobileNumber , " + 
 			" c.alternativeMobileNo, c.emailId,c.communicationAdderss , c.cityId , city.cityName ,"
-			+ " c.branchId , b.branchName , c.areaId , area.areaName , t.preferedCallDate  from Ticket t join TicketType tt on t.ticketTypeId = tt.idTicketType left join Asset a on t.idAsset = a.idAsset " + 
+			+ " c.branchId , b.branchName , c.areaId , area.areaName , t.preferedCallDate , "
+			+ " t.tickectNo , c.middleName , c.alternativeEmailId , c.officeNumber from Ticket t join TicketType tt on t.ticketTypeId = tt.idTicketType left join Asset a on t.idAsset = a.idAsset " + 
 			" left join AssetType at on at.idAssetType = a.idAssetType join Customer c on t.idCustomer = c.id join User u on u.idUser = t.assignedTo "
 			+ " join City city on city.idCity = c.cityId join Branch b on b.idBranch = c.branchId "
 			+ " join Area area on area.idArea = c.areaId where t.idTicket = :tickekId ";
@@ -116,8 +117,18 @@ public class TicketDaoImpl  implements TicketDao {
 			+ "set c.title = :title , c.firstName = :firstName ,c.lastName = :lastName ,c.mobileNumber = :mobileNumber ,"
 			+ "c.alternativeMobileNo = :alternativeMobileNo , c.emailId = :emailId ,"
 			+ "c.communicationAdderss = :communicationAdderss , t.status = :status ,"
-			+ " t.preferedCallDate = :preferedCallDate , c.currentAddress = :currentAddress , c.branchId = :branchId"
-			+ " c.areaId = :areaId where t.idTicket = :ticketId";
+			+ " t.preferedCallDate = :preferedCallDate , c.currentAddress = :currentAddress , c.branchId = :branchId ,"
+			+ " c.alternativeEmailId = :alternativeEmailId , c.officeNumber = :officeNumber ,"
+			+ " c.areaId = :areaId where t.tickectNo = :ticketId";
+	
+	/**
+	 * @author kiran
+	 * query to update customer comments and ticket closer status
+	 */
+	private static final String CUSTOMER_COMMENTS_UPDATE = "update Ticket t set t.comments = :comments , t.status = :status where t.idTicket = :ticketId";
+	
+	
+	private static final String GET_CUSTOMER_COMMENTS = " select comments from Ticket where idTicket = :ticketId ";
 	
 	/**
 	 * @author kiran
@@ -128,6 +139,8 @@ public class TicketDaoImpl  implements TicketDao {
 	public boolean createTicket(ProspectCreation prospectCreation) {
 		
 		try {
+			
+			logger.info("prospectCreation request data :: " +prospectCreation);
 
 			Customer customer = new Customer();
 
@@ -140,12 +153,13 @@ public class TicketDaoImpl  implements TicketDao {
 				Customer savedCustomer = customerRepository.save(customer);
 
 				ticket.setCustomer(savedCustomer);
+				ticket.setTickectNo(GenericUtil.generateTicketNo());
 				ticket.setStatusBean(statusRepository.findById(FFMSConstant.NEW_LEAD).get());
-				ticket.setTicketDescription("testing " + savedCustomer.getId());
+				//ticket.setTicketDescription("testing " + savedCustomer.getId());
 				ticket.setUser1(savedCustomer.getCreatedByUserId());
 				ticket.setUser2(savedCustomer.getCreatedByUserId());
 				ticket.setUser3(savedCustomer.getCreatedByUserId());
-				ticket.setTicketType(ticketTypeRepository.findById(1).get());
+				ticket.setTicketType(ticketTypeRepository.findById(prospectCreation.getTicketTypeId().intValue()).get());
 				ticket.setCreatedOn(new Date());
 				ticket.setModifiedOn(new Date());
 
@@ -175,6 +189,7 @@ public class TicketDaoImpl  implements TicketDao {
 		
 		customer.setTitle(prospectCreation.getTitle());
 		customer.setFirstName(prospectCreation.getFirstName());
+		customer.setMiddleName(prospectCreation.getMiddleName());
 		customer.setLastName(prospectCreation.getLastName());
 		customer.setMobileNumber(prospectCreation.getMobileNumber());
 		customer.setAlternativeMobileNo(prospectCreation.getAlternateMobileNumber());
@@ -187,7 +202,13 @@ public class TicketDaoImpl  implements TicketDao {
 		customer.setModifiedOn(new Date());
 		Status status = statusRepository.findById(1).get();
 		customer.setStatusBean(status);
+		
+		if(prospectCreation.getAlternateEmailId() != null)
+			customer.setAlternativeEmailId(prospectCreation.getAlternateEmailId());
 
+		if(prospectCreation.getOfficeNumber() != null)
+			customer.setOfficeNumber(prospectCreation.getOfficeNumber());
+		
 		User user = userRepository.findById(1l).get();
 		customer.setCreatedByUserId(user);
 		customer.setModifiedByUserId(user);
@@ -238,7 +259,6 @@ public class TicketDaoImpl  implements TicketDao {
 				TicketDetails td = new TicketDetails();
 
 				td.setTicketId(((BigInteger) object[0]).longValue());
-				td.setTicketNo(((BigInteger) object[0]).toString());
 				td.setTicketDescription((String) object[1]);
 				td.setCurrentAssigneeId(((BigInteger) object[2]).longValue());
 				td.setCurrentAssigneeName((String) object[3]);
@@ -279,6 +299,10 @@ public class TicketDaoImpl  implements TicketDao {
 				td.setAreaName((String) object[27]);
 				td.setActivities(populateActivities((Integer) object[6], td.getTicketId()));
 				td.setPreferredCallTime(GenericUtil.convertDateToStringFromate((Date) object[28]));
+				td.setTicketNo((String)object[29]);
+				td.setMiddleName((String)object[30]);
+				td.setAlternateEmailId((String)object[31]);
+				td.setOfficeNumber((String)object[32]);
 
 				ticketLists.add(td);
 				
@@ -327,10 +351,9 @@ public class TicketDaoImpl  implements TicketDao {
 			tickets.stream().forEach(object -> {
 				
 				TicketCardViewData cardViewData = new TicketCardViewData();
-				Random rnd = new Random();
-				int ticketNoRnd = 100000 + rnd.nextInt(900000);
+				
 				cardViewData.setTicketId(Long.valueOf(((BigInteger)object[0]).longValue()));
-				cardViewData.setTicketNumber(String.valueOf(ticketNoRnd));
+				cardViewData.setTicketNumber((String)object[6]);
 				cardViewData.setTicketCreationDate((Date)object[1]);
 				cardViewData.setCommittedETR(GenericUtil.convertDateToStringFromate((Date)object[1]));
 				cardViewData.setCustomerName((String)object[2]);
@@ -361,7 +384,7 @@ public class TicketDaoImpl  implements TicketDao {
 		int result = 0;
 		try {
 			
-			logger.info("basic info update address :: "+basicInfoUpdate.getCommunicationAddress());
+			logger.info("basic info update :: "+basicInfoUpdate);
 			
 			 result = entityManager.createNativeQuery(BASIC_INFO_UPDATE)
 			.setParameter("title", basicInfoUpdate.getTitle())
@@ -376,6 +399,8 @@ public class TicketDaoImpl  implements TicketDao {
 			.setParameter("currentAddress", GenericUtil.addressParserObjectToString(basicInfoUpdate.getCurrentAddress()))
 			.setParameter("branchId", basicInfoUpdate.getBranchId())
 			.setParameter("areaId", basicInfoUpdate.getAreaId())
+			.setParameter("alternativeEmailId", basicInfoUpdate.getAlternateEmailId())
+			.setParameter("officeNumber", basicInfoUpdate.getOfficeNumber())
 			.setParameter("ticketId", basicInfoUpdate.getTicketId()).executeUpdate();
 			 
 			 if(result > 0)
@@ -383,10 +408,12 @@ public class TicketDaoImpl  implements TicketDao {
 				 TicketActivityLogVo ticketActivityLog = new TicketActivityLogVo();
 				 
 				 ticketActivityLog.setActivityId(FFMSConstant.ActivityConstant.BASIC_INFO_UPDATE);
-				 ticketActivityLog.setTicketId(basicInfoUpdate.getTicketId());
+				 
+				 String ticketId = entityManager.createNativeQuery(" select idTicket from Ticket where tickectNo = "+basicInfoUpdate.getTicketId()).getSingleResult().toString();
+				 ticketActivityLog.setTicketId(Long.valueOf(ticketId));
 				 ticketActivityLog.setActivityStatus(FFMSConstant.ACTIVITY_COMPLETED);
 				 
-				 ticketActivityLogDao.saveTicketActivityLog(ticketActivityLog);
+				 ticketActivityLogDao.saveTicketActivityLog(Collections.singletonList(ticketActivityLog));
 			 }
 			
 			return result;
@@ -478,6 +505,34 @@ public class TicketDaoImpl  implements TicketDao {
 		
 		return countResult;
 	
+	}
+
+	@Override
+	public int closeTicket(String customerComments , Long ticketId) {
+		
+		int result = 0;
+		
+		 try {
+			result = entityManager.createNativeQuery(CUSTOMER_COMMENTS_UPDATE)
+					.setParameter("comments", customerComments)
+					.setParameter("status", FFMSConstant.COMPLETED)
+					.setParameter("ticketId", ticketId)
+					.executeUpdate();
+			
+			return result;
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return result;
+		}
+		
+	}
+
+	@Override
+	public String getTicketCommentsByTicketId(Long ticketId) {
+		
+		return entityManager.createNativeQuery(GET_CUSTOMER_COMMENTS).setParameter("ticketId", ticketId).getSingleResult().toString();
 	}
 	
 	

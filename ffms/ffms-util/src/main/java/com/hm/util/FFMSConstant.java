@@ -20,6 +20,9 @@ public interface FFMSConstant {
 	Integer REJECTED = 105;
 	Integer COMPLETED = 106;
 	
+	Long SALES_REQUEST = 1l;
+	Long SERVICE_REQUEST = 2l;
+	
 	List<Integer> ticketStatusList = Arrays.asList(new Integer[] { NEW_LEAD, IN_PROGRESS , REJECTED , COMPLETED});
 	
 	public interface ActivityConstant {

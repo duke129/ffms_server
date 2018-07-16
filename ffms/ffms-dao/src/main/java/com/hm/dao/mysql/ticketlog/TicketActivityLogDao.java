@@ -16,5 +16,5 @@ public interface TicketActivityLogDao {
 
 	List<TicketActivityLog> findTicketActivityLogByTicketId(Long ticketId);
 	
-	TicketActivityLog saveTicketActivityLog(TicketActivityLogVo ticketActivityLogVo);
+	List<TicketActivityLog> saveTicketActivityLog(List<TicketActivityLogVo> ticketActivityLogVos);
 }

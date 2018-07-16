@@ -2,18 +2,21 @@
  * 
  */
 package com.hm.dao.mysql.product;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,14 +61,14 @@ public class ProductDaoImpl implements ProductDao{
 		public ProductDTO convertIntoTypeHeadVo(Product product) {
 			
 			ProductDTO productDTO=new ProductDTO();
-			productDTO.setIdProduct(product.getIdProduct());
+			productDTO.setIdProduct(String.valueOf(product.getIdProduct()));
 			productDTO.setName(product.getName());
 			productDTO.setDescription(product.getDescription());
-			productDTO.setAssetId(product.getAssetId());
+			//productDTO.setAssetId(product.getAssetId());
 			productDTO.setPrice(product.getPrice());
 			productDTO.setImgPath(product.getImgPath());
 			productDTO.setVideoPath(product.getVideoPath());
-			//productDTO.setImage(encodeFileToBase64Binary(new File(product.getImgPath())));
+			productDTO.setImage(encodeFileToBase64Binary(new File(product.getImgPath())));
 			return productDTO;
 		
 	  }
@@ -78,7 +81,8 @@ public class ProductDaoImpl implements ProductDao{
 	                byte[] bytes = new byte[(int)file.length()];
 	                fileInputStreamReader.read(bytes);
 	              //encodedfile = Base64.encodeBase64(bytes).toString();
-	                encodedfile = new String(Base64.encodeBase64(bytes), "UTF-8");
+	                encodedfile = new String(Base64.getEncoder().encode(bytes), "UTF-8");
+	                fileInputStreamReader.close();
 	            } catch (FileNotFoundException e) {
 	                e.printStackTrace();
 	            } catch (IOException e) {
@@ -102,9 +106,9 @@ public class ProductDaoImpl implements ProductDao{
 				productDTO.setAssetTypeId(String.valueOf(objects[3]));
 				productDTO.setImgPath(String.valueOf(objects[4]));
 				productDTO.setImage(encodeFileToBase64Binary(new File(productDTO.getImgPath())));
+				//productDTO.setImage(encodeImage(productDTO.getImgPath()));
 				productDTOList.add(productDTO);
 			}
-			logger.info("product list is ::::"+productDTOList);
 			return productDTOList;
 		}
 		@Override
@@ -115,11 +119,35 @@ public class ProductDaoImpl implements ProductDao{
 			logger.info(String.valueOf(object));
 			ProductDTO productDTO=new ProductDTO();
 			productDTO.setImgPath(imagepath);
-			logger.info("videopath:::: "+productDTO);
 			return productDTO;
 		}
 		
-	
+	private static String encodeImage(String filePath){
+			
+		logger.info(" encodeImage started ");
+			String imageString = null;
+	        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	        
+			try {
+				
+				BufferedImage img = ImageIO.read(new File(filePath));
+				
+				ImageIO.write(img,  "png" , bos);
+				bos.flush();
+				byte[] imageBytes = bos.toByteArray();
+				
+				
+	            imageString = Base64.getEncoder().encodeToString(imageBytes);
+
+	            bos.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			logger.info(" encodeImage ended ");
+			return imageString;
+		}
 			
 
 }

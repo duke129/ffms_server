@@ -116,12 +116,15 @@ public class BasicInfoUpdate {
 	}
 	@Override
 	public String toString() {
-		return "BasicInfoUpdate [ticketId=" + ticketId + ", tittle=" + title + ", firstName=" + firstName
+		return "BasicInfoUpdate [ticketId=" + ticketId + ", title=" + title + ", firstName=" + firstName
 				+ ", middleName=" + middleName + ", lastName=" + lastName + ", mobileNumber=" + mobileNumber
 				+ ", alternateMobileNumber=" + alternateMobileNumber + ", officeNumber=" + officeNumber + ", emailId="
 				+ emailId + ", alternateEmailId=" + alternateEmailId + ", communicationAddress=" + communicationAddress
-				+ ", currentAddress=" + currentAddress + "]";
+				+ ", currentAddress=" + currentAddress + ", preferredCallTime=" + preferredCallTime + ", branchId="
+				+ branchId + ", areaId=" + areaId + "]";
 	}
+	
+	
 	
 	
 

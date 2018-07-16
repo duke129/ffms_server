@@ -47,6 +47,12 @@ public class ProspectCreation {
 	public void setCustomer(CustomerVo customer) {
 		this.customer = customer;
 	}
+
+	@Override
+	public String toString() {
+		return "ProspectCreation [ticketDescription=" + ticketDescription + ", ticketTypeId=" + ticketTypeId
+				+ ", prefferdCallTime=" + prefferdCallTime + ", customer=" + customer + "]";
+	}
 	
 	
 

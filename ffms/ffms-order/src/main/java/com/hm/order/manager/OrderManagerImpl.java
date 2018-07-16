@@ -10,8 +10,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.dao.mysql.order.OrderDao;
+import com.hm.dao.mysql.ticket.TicketDao;
 import com.hm.util.entity.Order;
 import com.hm.util.model.APIResponse;
+import com.hm.util.model.OrderActivityUpdate;
 import com.hm.util.model.OrderVo;
 
 /**
@@ -24,21 +26,23 @@ public class OrderManagerImpl implements OrderManager{
 	
 	@Autowired
 	OrderDao orderDao;
+	
+	@Autowired
+	TicketDao ticketDao;
 
 	@Override
-	public APIResponse saveOrder(List<OrderVo> ordersVo) {
+	public APIResponse saveOrder(OrderActivityUpdate orderActivityUpdate) {
 		
 		APIResponse response = new APIResponse();
 		
-		if(ordersVo != null)
+		if(orderActivityUpdate != null)
 		{
-			List<Order> ordersSaved = orderDao.saveOrder(ordersVo);
+			List<Order> ordersSaved = orderDao.saveOrder(orderActivityUpdate);
 			
 			if(ordersSaved != null)
 			{
 				response.setStatusId(200);
 				response.setStatusMessage("Successfully saved");
-				response.setData(ordersSaved);
 				
 				return response;
 			}
@@ -66,11 +70,16 @@ public class OrderManagerImpl implements OrderManager{
 		
 		if(ticketId != null && ticketId > 0)
 		{
+			OrderActivityUpdate orderActivityUpdate = new OrderActivityUpdate();
+			
 			List<OrderVo> ordersList = orderDao.getOrdersByTicketId(ticketId);
+			orderActivityUpdate.setOrdersVo(ordersList);
+			orderActivityUpdate.setTicketId(ticketId);
+			orderActivityUpdate.setComments(ticketDao.getTicketCommentsByTicketId(ticketId));
 			
 			response.setStatusId(200);
 			response.setStatusMessage("Success");
-			response.setData(ordersList);
+			response.setData(orderActivityUpdate);
 			
 			return response;
 		}

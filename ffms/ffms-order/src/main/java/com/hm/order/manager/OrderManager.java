@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.hm.util.model.APIResponse;
+import com.hm.util.model.OrderActivityUpdate;
 import com.hm.util.model.OrderVo;
 
 /**
@@ -18,7 +19,7 @@ import com.hm.util.model.OrderVo;
 @Service
 public interface OrderManager {
 
-	APIResponse saveOrder(List<OrderVo> orderVo);
+	APIResponse saveOrder(OrderActivityUpdate orderActivityUpdate);
 	
 	APIResponse getOrdersByTicketId(Long ticketId);
 }

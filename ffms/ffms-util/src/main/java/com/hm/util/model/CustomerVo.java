@@ -36,11 +36,11 @@ public class CustomerVo {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	public String getMiddletName() {
+	public String getMiddleName() {
 		return middleName;
 	}
-	public void setMiddletName(String middletName) {
-		this.middleName = middletName;
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 	public String getLastName() {
 		return lastName;
@@ -107,6 +107,14 @@ public class CustomerVo {
 	}
 	public void setAreaId(Long areaId) {
 		this.areaId = areaId;
+	}
+	@Override
+	public String toString() {
+		return "CustomerVo [title=" + title + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", mobileNumber=" + mobileNumber + ", alternateMobileNumber=" + alternateMobileNumber
+				+ ", officeNumber=" + officeNumber + ", emailId=" + emailId + ", alternateEmailId=" + alternateEmailId
+				+ ", communicationAddress=" + communicationAddress + ", currentAddress=" + currentAddress + ", cityId="
+				+ cityId + ", branchId=" + branchId + ", areaId=" + areaId + "]";
 	}
 	
 

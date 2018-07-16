@@ -17,8 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hm.dao.mysql.product.ProductRepository;
+import com.hm.dao.mysql.ticket.TicketDao;
+import com.hm.dao.mysql.ticketlog.TicketActivityLogDao;
+import com.hm.util.FFMSConstant;
 import com.hm.util.entity.Order;
+import com.hm.util.model.OrderActivityUpdate;
 import com.hm.util.model.OrderVo;
+import com.hm.util.model.TicketActivityLogVo;
 
 /**
  * @author kiran
@@ -34,30 +40,64 @@ public class OrderDaoImpl implements OrderDao{
 	@Autowired
 	OrderRepository orderRepository;
 	
+	@Autowired
+	TicketActivityLogDao ticketActivityLogDao;
+	
+	@Autowired
+	TicketDao ticketDao;
+	
+	@Autowired
+	ProductRepository productRepository;
+		
 	private static final Logger logger = LoggerFactory.getLogger(OrderDaoImpl.class);
 
 	@Override
-	public List<Order> saveOrder(List<OrderVo> ordersVo) {
+	public List<Order> saveOrder(OrderActivityUpdate orderActivityUpdate) {
 		
-		if(ordersVo != null &&  !ordersVo.isEmpty())
+		if(orderActivityUpdate.getOrdersVo() != null &&  !orderActivityUpdate.getOrdersVo().isEmpty())
 		{
+			
 			List<Order> orders = new ArrayList<Order>();
 			
-			ordersVo.forEach(orderVo -> {
-				
+			orderActivityUpdate.getOrdersVo().forEach(orderVo -> {
+								
 				Order order = new Order();
-				logger.info("order vo :: " +orderVo);
+				
 				order.setPrice(orderVo.getPrice());
 				order.setQuantity(orderVo.getQuantity());
-				order.setTicketId(BigInteger.valueOf(orderVo.getTicketId()));
+				order.setTicketId(BigInteger.valueOf(orderActivityUpdate.getTicketId()));
 				order.setProductId(BigInteger.valueOf(orderVo.getProductId()));
 				
 				orders.add(order);
 				
 			});
 			
+			List<Order> savedOrders = orderRepository.saveAll(orders);
 			
-			return orderRepository.saveAll(orders);
+			if(savedOrders != null && !savedOrders.isEmpty())
+			{
+				List<TicketActivityLogVo> ticketActivityLogs = new ArrayList<TicketActivityLogVo>();
+				
+				TicketActivityLogVo demoTicketActivityLog = new TicketActivityLogVo();
+				 
+				demoTicketActivityLog.setActivityId(FFMSConstant.ActivityConstant.DEMO);
+				demoTicketActivityLog.setTicketId(orderActivityUpdate.getTicketId());
+				demoTicketActivityLog.setActivityStatus(FFMSConstant.ACTIVITY_COMPLETED);
+				ticketActivityLogs.add(demoTicketActivityLog);
+				
+				TicketActivityLogVo orderTicketActivityLog = new TicketActivityLogVo();
+				 
+				orderTicketActivityLog.setActivityId(FFMSConstant.ActivityConstant.ORDER);
+				orderTicketActivityLog.setTicketId(orderActivityUpdate.getTicketId());
+				orderTicketActivityLog.setActivityStatus(FFMSConstant.ACTIVITY_COMPLETED);
+				ticketActivityLogs.add(orderTicketActivityLog);
+				
+				ticketActivityLogDao.saveTicketActivityLog(ticketActivityLogs);
+				
+				ticketDao.closeTicket(orderActivityUpdate.getComments(), orderActivityUpdate.getTicketId());
+				 
+			}
+			return savedOrders;
 		}
 		
 		return null;
@@ -78,7 +118,8 @@ public class OrderDaoImpl implements OrderDao{
 				OrderVo orderVo = new OrderVo();
 				BeanUtils.copyProperties(order, orderVo);
 				orderVo.setProductId(order.getProductId().longValue());
-				orderVo.setTicketId(order.getTicketId().longValue());
+				orderVo.setProductName(productRepository.findById(order.getProductId().longValue()).get().getName());
+				//orderVo.setTicketId(order.getTicketId().longValue());
 				returingOrders.add(orderVo);
 			});
 			

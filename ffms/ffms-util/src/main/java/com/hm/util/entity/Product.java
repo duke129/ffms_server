@@ -17,34 +17,34 @@ public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String idProduct;
+	private Long idProduct;
 
-	private BigInteger assetId;
+	//private BigInteger assetId;
 	
-	private Long assestTypeId;
+	private Long assetTypeId;
 	
 	
 	
-	//bi-directional many-to-one association to AssetType
+	/*//bi-directional many-to-one association to AssetType
 		@ManyToOne(fetch=FetchType.LAZY)
 		@JoinColumn(name="idAssetType")
-		private AssetType assetType;
+		private AssetType assetType;*/
 
 
-	public AssetType getAssetType() {
+/*	public AssetType getAssetType() {
 			return assetType;
 		}
 
 		public void setAssetType(AssetType assetType) {
 			this.assetType = assetType;
-		}
+		}*/
 
 	public Long getAssestTypeId() {
-		return assestTypeId;
+		return assetTypeId;
 	}
 
-	public void setAssestTypeId(Long assestTypeId) {
-		this.assestTypeId = assestTypeId;
+	public void setAssestTypeId(Long assetTypeId) {
+		this.assetTypeId = assetTypeId;
 	}
 
 	private String description;
@@ -72,21 +72,21 @@ public class Product implements Serializable {
 	public Product() {
 	}
 
-	public String getIdProduct() {
+	public Long getIdProduct() {
 		return this.idProduct;
 	}
 
-	public void setIdProduct(String idProduct) {
+	public void setIdProduct(Long idProduct) {
 		this.idProduct = idProduct;
 	}
 
-	public BigInteger getAssetId() {
+	/*public BigInteger getAssetId() {
 		return this.assetId;
 	}
 
 	public void setAssetId(BigInteger assetId) {
 		this.assetId = assetId;
-	}
+	}*/
 
 	public String getDescription() {
 		return this.description;
@@ -144,8 +144,8 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product [idProduct=" + idProduct + ", assetId=" + assetId + ", assestTypeId=" + assestTypeId
-				+ ", assetType=" + assetType + ", description=" + description + ", imgPath=" + imgPath + ", name="
+		return "Product [idProduct=" + idProduct + ", assestTypeId=" + assetTypeId
+				+ ", description=" + description + ", imgPath=" + imgPath + ", name="
 				+ name + ", videoPath=" + videoPath + ", price=" + price + ", productSpecifications="
 				+ productSpecifications + "]";
 	}

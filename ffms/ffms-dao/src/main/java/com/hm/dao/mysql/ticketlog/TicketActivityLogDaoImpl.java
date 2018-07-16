@@ -4,6 +4,7 @@
 package com.hm.dao.mysql.ticketlog;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,21 +40,29 @@ public class TicketActivityLogDaoImpl implements TicketActivityLogDao{
 	}
 
 	@Override
-	public TicketActivityLog saveTicketActivityLog(TicketActivityLogVo ticketActivityLogVo) {
+	public List<TicketActivityLog> saveTicketActivityLog(List<TicketActivityLogVo> ticketActivityLogVos) {
 		
-		if(ticketActivityLogVo != null )
+		if(ticketActivityLogVos != null && !ticketActivityLogVos.isEmpty())
 		{
-			TicketActivityLog activityLog = new TicketActivityLog();
+			List<TicketActivityLog> activityLogs = new ArrayList<TicketActivityLog>();
 			
-			activityLog.setTicketId(BigInteger.valueOf(ticketActivityLogVo.getTicketId()));
-			activityLog.setActivityCreatedOn(new Date());
-			activityLog.setStatus(ticketActivityLogVo.getActivityStatus());
-			activityLog.setActivity(activityRepository.findById(Integer.valueOf(ticketActivityLogVo.getActivityId())).get());
-			activityLog.setActivityDoneBy((BigInteger.valueOf(1)));
+			ticketActivityLogVos.forEach(ticketActivityLogVo -> {
+				
+				TicketActivityLog activityLog = new TicketActivityLog();
+				
+				activityLog.setTicketId(BigInteger.valueOf(ticketActivityLogVo.getTicketId()));
+				activityLog.setActivityCreatedOn(new Date());
+				activityLog.setStatus(ticketActivityLogVo.getActivityStatus());
+				activityLog.setActivity(activityRepository.findById(Integer.valueOf(ticketActivityLogVo.getActivityId())).get());
+				activityLog.setActivityDoneBy((BigInteger.valueOf(1)));
+				
+				activityLogs.add(activityLog);
+				
+			});
 			
-			TicketActivityLog resultActivityLogVo = ticketActivityLogRepository.save(activityLog);
 			
-			return resultActivityLogVo;
+			return ticketActivityLogRepository.saveAll(activityLogs);
+			
 		}
 		
 		return null;
