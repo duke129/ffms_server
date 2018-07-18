@@ -50,6 +50,16 @@ public class Area implements Serializable {
 /*	//bi-directional many-to-one association to Customer
 	@OneToMany(mappedBy="area")
 	private List<Customer> customers;*/
+	
+	private String code;
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 	public Area() {
 	}
@@ -122,8 +132,10 @@ public class Area implements Serializable {
 	public String toString() {
 		return "Area [idArea=" + idArea + ", areaName=" + areaName + ", createdOn=" + createdOn + ", modifiedOn="
 				+ modifiedOn + ", branch=" + branch + ", status=" + status + ", createdByUser=" + createdByUser
-				+ ", user2=" + user2 + "]";
+				+ ", user2=" + user2 + ", code=" + code + "]";
 	}
+
+	
 
 /*	public List<Customer> getCustomers() {
 		return this.customers;

@@ -18,9 +18,16 @@ public class CityDTO {
 	private String statusId;
 	private String code;
 	private String state;
+	private String status;
 	
 	
 	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getCityId() {
 		return cityId;
 	}
@@ -57,8 +64,10 @@ public class CityDTO {
 	@Override
 	public String toString() {
 		return "CityDTO [cityId=" + cityId + ", cityName=" + cityName + ", statusId=" + statusId + ", code=" + code
-				+ ", state=" + state + "]";
+				+ ", state=" + state + ", status=" + status + "]";
 	}
+	
+	
 	
 	
 

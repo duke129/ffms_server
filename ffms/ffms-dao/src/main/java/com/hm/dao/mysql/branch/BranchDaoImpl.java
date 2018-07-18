@@ -42,6 +42,7 @@ public class BranchDaoImpl implements BranchDao {
 	
 	private static final String BRANCH_BY_CITYID = "select b.idBranch,b.branchName,b.cityId,c.cityName,b.status from Branch b inner join City c on b.cityId=c.idCity where b.cityId=?";
 
+	private static final String BRANCH_DETAILS="select b.idBranch,b.branchName,b.code,b.cityId,c.cityName,c.state,b.status from Branch b inner join City c on b.cityId=c.idCity";
 
 	
 	@Override
@@ -95,11 +96,25 @@ public class BranchDaoImpl implements BranchDao {
 	}
 
 	@Override
-	public List<Branch> findAllBranch() {
-		List<Branch> listbranch=branchRepository.findAll();
-		logger.info("city list view is :::"+listbranch);
+	public List<BranchDTO> findAllBranch() {
+		
+		List<BranchDTO> branchDTOList = new ArrayList<BranchDTO>();
+		List<Object[]> branch = entityManager.createNativeQuery(BRANCH_DETAILS).getResultList();
+	
+		for (Object[] objects : branch) {
+			BranchDTO branchDTO=new BranchDTO();
+			branchDTO.setBranchId(String.valueOf(objects[0]));
+			branchDTO.setBranchName(String.valueOf(objects[1]));
+			branchDTO.setCode(String.valueOf(objects[2]));
+			branchDTO.setCityId(String.valueOf(objects[3]));
+			branchDTO.setCityName(String.valueOf(objects[4]));
+			branchDTO.setState(String.valueOf(objects[5]));
+			branchDTO.setStatusId(String.valueOf(objects[6]));
+			branchDTOList.add(branchDTO);
 			
-		return listbranch;
+		}
+		
+		return branchDTOList;
 	}
 
 	@Override

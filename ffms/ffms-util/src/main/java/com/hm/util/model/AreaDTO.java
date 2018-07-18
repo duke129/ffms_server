@@ -7,9 +7,18 @@ public class AreaDTO {
 	private String branchName;
 	private String branchId;
 	private String statusId;
-	private String Code;
+	private String code;
 	private String cityId;
 	private String cityName;
+	private String status;
+	
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public String getAreaId() {
 		return areaId;
 	}
@@ -42,12 +51,7 @@ public class AreaDTO {
 	public void setStatusId(String statusId) {
 		this.statusId = statusId;
 	}
-	public String getCode() {
-		return Code;
-	}
-	public void setCode(String code) {
-		Code = code;
-	}
+	
 	public String getCityId() {
 		return cityId;
 	}
@@ -60,12 +64,22 @@ public class AreaDTO {
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
 	@Override
 	public String toString() {
 		return "AreaDTO [areaId=" + areaId + ", areaName=" + areaName + ", branchName=" + branchName + ", branchId="
-				+ branchId + ", statusId=" + statusId + ", Code=" + Code + ", cityId=" + cityId + ", cityName="
-				+ cityName + "]";
+				+ branchId + ", statusId=" + statusId + ", code=" + code + ", cityId=" + cityId + ", cityName="
+				+ cityName + ", status=" + status + "]";
 	}
+	
+	
+	
+	
 	
 	
 	

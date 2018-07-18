@@ -41,7 +41,7 @@ public class CityDaoImpl implements CityDao {
 			city.setUser1(user);
 			city.setUser2(user);
 			Status status=new Status();
-			if(cityDto.getStatusId().equalsIgnoreCase("Enable")) {
+			if(cityDto.getStatus().equalsIgnoreCase("Enable")) {
 				status.setIdStatus(1);
 				
 			}else {
@@ -50,6 +50,7 @@ public class CityDaoImpl implements CityDao {
 			
 			city.setCode(cityDto.getCode());
 			city.setStatusBean(status);
+			city.setState(cityDto.getState());
 			System.out.println("City value that going to be save into databases ************"+city);
 			cityRepository.save(city);
 			

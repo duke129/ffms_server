@@ -10,7 +10,14 @@ public class BranchDTO {
     private String cityName;
     private String statusId;
 	private String code;
+	private String state;
 	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
 	public String getBranchId() {
 		return branchId;
 	}
@@ -52,8 +59,9 @@ public class BranchDTO {
 	@Override
 	public String toString() {
 		return "BranchDTO [branchId=" + branchId + ", branchName=" + branchName + ", cityId=" + cityId + ", cityName="
-				+ cityName + ", statusId=" + statusId + ", code=" + code + "]";
+				+ cityName + ", statusId=" + statusId + ", code=" + code + ", state=" + state + "]";
 	}
+	
 	
 	
 	

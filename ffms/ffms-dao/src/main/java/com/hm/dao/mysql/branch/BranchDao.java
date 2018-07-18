@@ -17,7 +17,7 @@ public interface BranchDao {
 	
 	void saveBranch(BranchDTO branchDto);
 	
-	List<Branch> findAllBranch();
+	List<BranchDTO> findAllBranch();
 	List<BranchDTO> getBranchByCityId(Long id);
 	
 	
