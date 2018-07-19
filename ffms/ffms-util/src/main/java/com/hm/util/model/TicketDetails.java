@@ -51,6 +51,7 @@ public class TicketDetails {
 	private String areaName;
 	
 	private List<ActivityVo> activities;
+	private String rejectionReason;
 
 	public Long getTicketId() {
 		return ticketId;
@@ -339,14 +340,14 @@ public class TicketDetails {
 	public void setActivities(List<ActivityVo> activities) {
 		this.activities = activities;
 	}
-	
 
-	
-	
-	
-	
-	
-	
-	
+	public String getRejectionReason() {
+		return rejectionReason;
+	}
 
+	public void setRejectionReason(String rejectionReason) {
+		this.rejectionReason = rejectionReason;
+	}
+	
+	
 }

@@ -5,6 +5,16 @@ public class TypeHeadVo {
 	private Long id;
 	private String name;
 	
+	public TypeHeadVo()
+	{
+		
+	}
+	
+	public TypeHeadVo(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
 	public Long getId() {
 		return id;
 	}

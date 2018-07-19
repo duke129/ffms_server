@@ -3,6 +3,8 @@
  */
 package com.hm.util.model;
 
+import java.math.BigInteger;
+
 /**
  * @author kiran
  *
@@ -24,6 +26,9 @@ public class CustomerVo {
 	private Long cityId;
 	private Long branchId;
 	private Long areaId;
+	private String type;
+	private BigInteger count;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -105,8 +110,25 @@ public class CustomerVo {
 	public Long getAreaId() {
 		return areaId;
 	}
+	
 	public void setAreaId(Long areaId) {
 		this.areaId = areaId;
+	}
+	
+	
+	public BigInteger getCount() {
+		return count;
+	}
+	public void setCount(BigInteger count) {
+		this.count = count;
+	}
+	
+	
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	@Override
 	public String toString() {

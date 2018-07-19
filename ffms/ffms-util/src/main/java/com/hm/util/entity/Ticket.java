@@ -29,6 +29,8 @@ public class Ticket implements Serializable {
 	private String ticketDescription;
 	
 	private String comments;
+	
+	private String rejectionReason;
 
 	//bi-directional many-to-one association to Asset
 	@ManyToOne
@@ -171,6 +173,16 @@ public class Ticket implements Serializable {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+
+	public String getRejectionReason() {
+		return rejectionReason;
+	}
+
+	public void setRejectionReason(String rejectionReason) {
+		this.rejectionReason = rejectionReason;
+	}
+	
+	
 	
 	
 	

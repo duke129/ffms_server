@@ -41,6 +41,7 @@ public class ProductDaoImpl implements ProductDao{
 	private static final String model_Details_Query="select p.idProduct,p.name,p.price,p.assetTypeId,p.imgPath from Product p where p.assetTypeId=?";
 	private static final String getmodelImageFolder_Query="select p.videoPath from Product p where p.idProduct=?";
 	
+	private static final String GET_IMAGE_PATH = " select p.imgPath from Product p where p.idProduct = :productId ";
 	
 	@Autowired
 	ProductRepository productRepository;
@@ -73,54 +74,58 @@ public class ProductDaoImpl implements ProductDao{
 		
 	  }
 
-	       private static String encodeFileToBase64Binary(File file){
-	    	   logger.info("file is ::"+file);
-	            String encodedfile = null;
-	            try {
-	                FileInputStream fileInputStreamReader = new FileInputStream(file);
-	                byte[] bytes = new byte[(int)file.length()];
-	                fileInputStreamReader.read(bytes);
-	              //encodedfile = Base64.encodeBase64(bytes).toString();
-	                encodedfile = new String(Base64.getEncoder().encode(bytes), "UTF-8");
-	                fileInputStreamReader.close();
-	            } catch (FileNotFoundException e) {
-	                e.printStackTrace();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
+	private String encodeFileToBase64Binary(File file) {
+		logger.info("file is ::" + file);
+		String encodedfile = null;
+		try {
+			FileInputStream fileInputStreamReader = new FileInputStream(file);
+			byte[] bytes = new byte[(int) file.length()];
+			fileInputStreamReader.read(bytes);
+			// encodedfile = Base64.encodeBase64(bytes).toString();
+			encodedfile = new String(Base64.getEncoder().encode(bytes), "UTF-8");
+			fileInputStreamReader.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-	            return encodedfile;
-	        }
-		@Override
-		public List<ProductDTO> findAllProductByAssetId(Long id) {
-			
-			List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
-			
-			List<Object[]> product = entityManager.createNativeQuery(model_Details_Query).setParameter(1,id).getResultList();
-		
-			for (Object[] objects : product) {
-				ProductDTO productDTO=new ProductDTO();
-				productDTO.setIdProduct(String.valueOf(objects[0]));
-				productDTO.setName(String.valueOf(objects[1]));
-				productDTO.setPrice(String.valueOf(objects[2]));
-				productDTO.setAssetTypeId(String.valueOf(objects[3]));
-				productDTO.setImgPath(String.valueOf(objects[4]));
-				productDTO.setImage(encodeFileToBase64Binary(new File(productDTO.getImgPath())));
-				//productDTO.setImage(encodeImage(productDTO.getImgPath()));
-				productDTOList.add(productDTO);
-			}
-			return productDTOList;
+		return encodedfile;
+	}
+	
+	@Override
+	public List<ProductDTO> findAllProductByAssetId(Long id) {
+
+		List<ProductDTO> productDTOList = new ArrayList<ProductDTO>();
+
+		List<Object[]> product = entityManager.createNativeQuery(model_Details_Query).setParameter(1, id)
+				.getResultList();
+
+		for (Object[] objects : product) {
+			ProductDTO productDTO = new ProductDTO();
+			productDTO.setIdProduct(String.valueOf(objects[0]));
+			productDTO.setName(String.valueOf(objects[1]));
+			productDTO.setPrice(String.valueOf(objects[2]));
+			productDTO.setAssetTypeId(String.valueOf(objects[3]));
+			productDTO.setImgPath(String.valueOf(objects[4]));
+			//productDTO.setImage(encodeFileToBase64Binary(new File(productDTO.getImgPath())));
+			// productDTO.setImage(encodeImage(productDTO.getImgPath()));
+			productDTOList.add(productDTO);
 		}
-		@Override
-		public ProductDTO findProductImageListByProductId(Long modelId) {
-			Object object =entityManager.createNativeQuery(getmodelImageFolder_Query).setParameter(1,modelId).getSingleResult();
-			
-			String imagepath=String.valueOf(object);
-			logger.info(String.valueOf(object));
-			ProductDTO productDTO=new ProductDTO();
-			productDTO.setImgPath(imagepath);
-			return productDTO;
-		}
+		return productDTOList;
+	}
+	
+	@Override
+	public ProductDTO findProductImageListByProductId(Long modelId) {
+		Object object = entityManager.createNativeQuery(getmodelImageFolder_Query).setParameter(1, modelId)
+				.getSingleResult();
+
+		String imagepath = String.valueOf(object);
+		logger.info(String.valueOf(object));
+		ProductDTO productDTO = new ProductDTO();
+		productDTO.setImgPath(imagepath);
+		return productDTO;
+	}
 		
 	private static String encodeImage(String filePath){
 			
@@ -148,6 +153,19 @@ public class ProductDaoImpl implements ProductDao{
 			logger.info(" encodeImage ended ");
 			return imageString;
 		}
+	
+	@Override
+	public String getImageByProductId(Long id) {
+		
+		String imagePath = entityManager.createNativeQuery(GET_IMAGE_PATH).setParameter("productId", id).getSingleResult().toString();
+		
+		if(imagePath != null && !imagePath.isEmpty())
+		{
+			return encodeFileToBase64Binary(new File(imagePath));
+		}
+		
+		return null;
+	}
 			
 
 }

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import com.hm.util.model.APIResponse;
 import com.hm.util.model.AssetVo;
 import com.hm.util.model.ProductDTO;
 import com.hm.util.model.TypeHeadVo;
+import com.hm.util.model.filter.AssetFilter;
 
 @RestController
 @RequestMapping("/asset")
@@ -59,5 +62,40 @@ public class AssetController {
         return new ResponseEntity<List<ProductDTO>>(typeheadvoListForAssetSelection, HttpStatus.OK);
     }
 	
+	@CrossOrigin
+	@PostMapping(path = "/add")
+	public ResponseEntity<Void> addAsset(@RequestBody AssetVo assetVo) {
+
+		logger.info("addAsset payload" + assetVo);
+		assetManager.addAsset(assetVo);
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+
+	@CrossOrigin
+	@GetMapping(path = "/type/list")
+	public List<TypeHeadVo> findAllAssetType() {
+
+		return assetManager.findAllAssetType();
+
+	}
+
+	@CrossOrigin
+	@PostMapping(path = "/filter")
+	public List<AssetVo> findAssetByFilter(@RequestBody AssetFilter filter) {
+
+		logger.info(" findAssetByFilter payload :: " + filter);
+		List<AssetVo> listOfAsset = assetManager.findAssetByFilter(filter);
+		return listOfAsset;
+	}
+
+	@CrossOrigin
+	@PostMapping(path = "/update")
+	public ResponseEntity<Void> updateAsset(@RequestBody AssetVo assetVo) {
+		logger.info("updateAsset payload :: " + assetVo);
+		
+		assetManager.updateAsset(assetVo);
+		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+
 	
 }

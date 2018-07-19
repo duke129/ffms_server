@@ -9,13 +9,23 @@ import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hm.dao.mysql.asset.AssetDaoImpl;
 import com.hm.dao.mysql.product.ProductDao;
+import com.hm.util.entity.Asset;
+import com.hm.util.entity.AssetType;
+import com.hm.util.entity.Status;
+import com.hm.util.entity.User;
 import com.hm.util.model.AssetVo;
 import com.hm.util.model.ProductDTO;
 import com.hm.util.model.TypeHeadVo;
+import com.hm.util.model.filter.AssetFilter;
 
 @Service
 public class AssetManagerImpl implements AssetManager {
@@ -56,5 +66,55 @@ public class AssetManagerImpl implements AssetManager {
 		
 		
 		return productDtolist;
+	}
+	
+	@Override
+	public List<AssetVo> findAssetByFilter(AssetFilter filter) {
+
+		return assetDao.findAssetByFilter(filter);
+	}
+
+	@Override
+	public void addAsset(AssetVo assetVo) {
+		if (assetVo.getIdAsset() != null) {
+			updateAsset(assetVo);
+			return;
+		}
+
+		Asset asset = new Asset();
+		BeanUtils.copyProperties(assetVo, asset);
+		ObjectMapper objectMapper=new ObjectMapper();
+		try {
+			String assetDescription=objectMapper.writeValueAsString(assetVo.getAssetDescription());
+			asset.setAssetDescription(assetDescription);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("    *************"+assetVo.getAssetDescription());
+		
+		User user = new User();
+		user.setIdUser(1l);
+		Status status = new Status();
+		status.setIdStatus(0);
+		// status.setIdStatus(assetVo.getStatus());
+		AssetType at = new AssetType();
+		// at.setIdAssetType(assetVo.getIdAssetType());
+		at.setIdAssetType(assetVo.getIdAssetType());
+		asset.setUser1(user);
+		asset.setUser2(user);
+		asset.setAssetType(at);
+		asset.setStatusBean(status);
+		assetDao.addAsset(asset);
+	}
+
+	@Override
+	public List<TypeHeadVo> findAllAssetType() {
+		return assetDao.findAllAssetType();
+	}
+
+	@Override
+	public void updateAsset(AssetVo assetVo) {
+		assetDao.updateAsset(assetVo);
 	}
 }

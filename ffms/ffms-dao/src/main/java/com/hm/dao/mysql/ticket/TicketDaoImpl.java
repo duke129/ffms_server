@@ -44,6 +44,7 @@ import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketActivityLogVo;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
+import com.hm.util.model.TicketFilter;
 
 /**
  * @author kiran
@@ -93,7 +94,7 @@ public class TicketDaoImpl  implements TicketDao {
 	 * query to fetch list view of tickets
 	 */
 	private static final String GET_CARD_VIEW_DATA = "select t.idTicket , t.createdOn , c.firstName , c.mobileNumber , c.communicationAdderss , t.ticketTypeId , t.tickectNo "
-			+ "from Ticket t inner join Customer c on c.id = t.idCustomer ";
+			+ "from Ticket t inner join Customer c on c.id = t.idCustomer where c.id > 0 ";
 	
 	/**
 	 * @author kiran
@@ -104,7 +105,7 @@ public class TicketDaoImpl  implements TicketDao {
 			" a.installationLong , c.id , c.title , c.firstName ,c.lastName ,c.mobileNumber , " + 
 			" c.alternativeMobileNo, c.emailId,c.communicationAdderss , c.cityId , city.cityName ,"
 			+ " c.branchId , b.branchName , c.areaId , area.areaName , t.preferedCallDate , "
-			+ " t.tickectNo , c.middleName , c.alternativeEmailId , c.officeNumber from Ticket t join TicketType tt on t.ticketTypeId = tt.idTicketType left join Asset a on t.idAsset = a.idAsset " + 
+			+ " t.tickectNo , c.middleName , c.alternativeEmailId , c.officeNumber , t.rejectionReason from Ticket t join TicketType tt on t.ticketTypeId = tt.idTicketType left join Asset a on t.idAsset = a.idAsset " + 
 			" left join AssetType at on at.idAssetType = a.idAssetType join Customer c on t.idCustomer = c.id join User u on u.idUser = t.assignedTo "
 			+ " join City city on city.idCity = c.cityId join Branch b on b.idBranch = c.branchId "
 			+ " join Area area on area.idArea = c.areaId where t.idTicket = :tickekId ";
@@ -129,6 +130,9 @@ public class TicketDaoImpl  implements TicketDao {
 	
 	
 	private static final String GET_CUSTOMER_COMMENTS = " select comments from Ticket where idTicket = :ticketId ";
+	
+	
+	private static final String UPDATE_CUSTOMER_NOT_INTERESTED = " update Ticket t set t.rejectionReason = :rejectionReason , t.status = :status where t.idTicket = :ticketId ";
 	
 	/**
 	 * @author kiran
@@ -303,6 +307,7 @@ public class TicketDaoImpl  implements TicketDao {
 				td.setMiddleName((String)object[30]);
 				td.setAlternateEmailId((String)object[31]);
 				td.setOfficeNumber((String)object[32]);
+				td.setRejectionReason((String)object[33]);
 
 				ticketLists.add(td);
 				
@@ -326,7 +331,7 @@ public class TicketDaoImpl  implements TicketDao {
 		
 		if(status > 0 )
 		{
-			completeQuery.append(" where t.status = "+status);
+			completeQuery.append(" and t.status = "+status);
 			
 		}
 		
@@ -405,15 +410,14 @@ public class TicketDaoImpl  implements TicketDao {
 			 
 			 if(result > 0)
 			 {
-				 TicketActivityLogVo ticketActivityLog = new TicketActivityLogVo();
+				 String ticketId = entityManager.createNativeQuery(" select idTicket from Ticket where tickectNo = "+basicInfoUpdate.getTicketId())
+						 .getSingleResult().toString();
 				 
-				 ticketActivityLog.setActivityId(FFMSConstant.ActivityConstant.BASIC_INFO_UPDATE);
+				 if(basicInfoUpdate.getRejectionReason() != null)
+					 updateAsCustomerNotInterested(basicInfoUpdate, ticketId);
+				 else
+					 updateAsCustomerInterested(basicInfoUpdate,ticketId);
 				 
-				 String ticketId = entityManager.createNativeQuery(" select idTicket from Ticket where tickectNo = "+basicInfoUpdate.getTicketId()).getSingleResult().toString();
-				 ticketActivityLog.setTicketId(Long.valueOf(ticketId));
-				 ticketActivityLog.setActivityStatus(FFMSConstant.ACTIVITY_COMPLETED);
-				 
-				 ticketActivityLogDao.saveTicketActivityLog(Collections.singletonList(ticketActivityLog));
 			 }
 			
 			return result;
@@ -427,6 +431,58 @@ public class TicketDaoImpl  implements TicketDao {
 		
 	}
 	
+	private void updateAsCustomerNotInterested(BasicInfoUpdate basicInfoUpdate, String ticketId) {
+		
+		int result = 0;
+		
+		result = entityManager.createNativeQuery(UPDATE_CUSTOMER_NOT_INTERESTED)
+				.setParameter("rejectionReason", basicInfoUpdate.getRejectionReason())
+				.setParameter("status", FFMSConstant.REJECTED)
+				.setParameter("ticketId", ticketId).executeUpdate();
+		
+		if(result > 0)
+		{
+			List<TicketActivityLogVo> ticketActivityLogs = new ArrayList<TicketActivityLogVo>();
+			
+			TicketActivityLogVo basicTicketActivityLog = new TicketActivityLogVo();
+			 
+			basicTicketActivityLog.setActivityId(FFMSConstant.ActivityConstant.BASIC_INFO_UPDATE);
+			basicTicketActivityLog.setTicketId(Long.valueOf(ticketId));
+			basicTicketActivityLog.setActivityStatus(FFMSConstant.ACTIVITY_COMPLETED);
+			ticketActivityLogs.add(basicTicketActivityLog);
+			
+			TicketActivityLogVo demoTicketActivityLog = new TicketActivityLogVo();
+			 
+			demoTicketActivityLog.setActivityId(FFMSConstant.ActivityConstant.DEMO);
+			demoTicketActivityLog.setTicketId(Long.valueOf(ticketId));
+			demoTicketActivityLog.setActivityStatus(FFMSConstant.ACTIVITY_REJECTED);
+			ticketActivityLogs.add(demoTicketActivityLog);
+			
+			TicketActivityLogVo orderTicketActivityLog = new TicketActivityLogVo();
+			 
+			orderTicketActivityLog.setActivityId(FFMSConstant.ActivityConstant.ORDER);
+			orderTicketActivityLog.setTicketId(Long.valueOf(ticketId));
+			orderTicketActivityLog.setActivityStatus(FFMSConstant.ACTIVITY_REJECTED);
+			ticketActivityLogs.add(orderTicketActivityLog);
+			
+			ticketActivityLogDao.saveTicketActivityLog(ticketActivityLogs);
+		}
+		
+	}
+
+	private void updateAsCustomerInterested(BasicInfoUpdate basicInfoUpdate , String ticketId) {
+
+		TicketActivityLogVo ticketActivityLog = new TicketActivityLogVo();
+		 
+		 ticketActivityLog.setActivityId(FFMSConstant.ActivityConstant.BASIC_INFO_UPDATE);
+		 
+		 ticketActivityLog.setTicketId(Long.valueOf(ticketId));
+		 ticketActivityLog.setActivityStatus(FFMSConstant.ACTIVITY_COMPLETED);
+		 
+		 ticketActivityLogDao.saveTicketActivityLog(Collections.singletonList(ticketActivityLog));
+		 
+	}
+
 	/**
 	 * 
 	 * @param ticketTypeId
@@ -533,6 +589,27 @@ public class TicketDaoImpl  implements TicketDao {
 	public String getTicketCommentsByTicketId(Long ticketId) {
 		
 		return entityManager.createNativeQuery(GET_CUSTOMER_COMMENTS).setParameter("ticketId", ticketId).getSingleResult().toString();
+	}
+
+	@Override
+	public List<TicketCardViewData> searchTicketWithFilter(TicketFilter ticketFilter) {
+		
+		if(ticketFilter != null)
+		{
+			StringBuilder completeQuery = new StringBuilder(GET_CARD_VIEW_DATA);
+			
+			if(ticketFilter.getTicketNo() != null && !ticketFilter.getTicketNo().isEmpty())
+				completeQuery.append(" and t.tickectNo = " +ticketFilter.getTicketNo());
+			
+			if(ticketFilter.getMobileNumber() != null && !ticketFilter.getMobileNumber().isEmpty())
+				completeQuery.append(" and c.mobileNumber = " +ticketFilter.getMobileNumber());
+			
+			List<Object[]> tickets = entityManager.createNativeQuery(completeQuery.toString()).getResultList();
+			
+			return xTransformToCardViewList(tickets);
+		}
+		
+		return null;
 	}
 	
 	

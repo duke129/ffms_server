@@ -74,4 +74,9 @@ public class ProductController {
         return apiResponse;
     }
 
+	@RequestMapping(value = "/getImage/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	 public APIResponse getImageByProductId(@PathVariable("id") Long id)
+	 {
+		 return productManager.getImageByProductId(id);
+	 }
 }

@@ -14,6 +14,7 @@ public interface FFMSConstant {
 	
 	Integer ACTIVITY_COMPLETED = 101;
 	Integer ACTIVITY_NOT_DONE = 102;
+	Integer ACTIVITY_REJECTED = 107;
 	
 	Integer NEW_LEAD = 103;
 	Integer IN_PROGRESS = 104;

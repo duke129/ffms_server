@@ -11,6 +11,7 @@ import com.hm.util.model.DashBoardSummaryCountVo;
 import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
+import com.hm.util.model.TicketFilter;
 
 /**
  * @author kiran
@@ -33,5 +34,7 @@ public interface TicketDao {
 	int closeTicket(String customerComments , Long ticketId);
 	
 	String getTicketCommentsByTicketId(Long ticketId);
+	
+	List<TicketCardViewData> searchTicketWithFilter(TicketFilter ticketFilter);
 
 }

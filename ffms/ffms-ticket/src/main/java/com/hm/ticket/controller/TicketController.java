@@ -24,6 +24,7 @@ import com.hm.util.model.DashBoardSummaryCountVo;
 import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
+import com.hm.util.model.TicketFilter;
 
 /**
  * @author kiran
@@ -89,6 +90,13 @@ public class TicketController {
 	public APIResponse  basicInfoUpdate(@RequestBody BasicInfoUpdate basicInfoUpdate)
 	{
 		return ticketManager.basicInfoUpdate(basicInfoUpdate);
+	}
+	
+	@CrossOrigin
+	@PostMapping("filter")
+	public APIResponse searchTicketWithFilter(@RequestBody TicketFilter ticketFilter)
+	{
+		return ticketManager.searchTicketWithFilter(ticketFilter);
 	}
 
 }

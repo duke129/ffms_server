@@ -18,6 +18,7 @@ public class BasicInfoUpdate {
 	
 	private Long branchId;
 	private Long areaId;
+	private String rejectionReason;
 	
 	public Long getTicketId() {
 		return ticketId;
@@ -113,6 +114,15 @@ public class BasicInfoUpdate {
 	}
 	public void setAreaId(Long areaId) {
 		this.areaId = areaId;
+	}
+	
+	
+	
+	public String getRejectionReason() {
+		return rejectionReason;
+	}
+	public void setRejectionReason(String rejectionReason) {
+		this.rejectionReason = rejectionReason;
 	}
 	@Override
 	public String toString() {

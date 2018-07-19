@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.hm.dao.mysql.product.ProductDao;
+import com.hm.util.model.APIResponse;
 import com.hm.util.model.ImageDTO;
 import com.hm.util.model.ProductDTO;
 
@@ -38,7 +39,9 @@ public class ProductManagerImpl implements ProductManager {
 		
 		List<ImageDTO> imageList=new ArrayList<ImageDTO>();
 		
-		for (int i = 0; i < listOfImageFiles.length; i++) {
+		if(listOfImageFiles != null)
+		{
+			for (int i = 0; i < listOfImageFiles.length; i++) {
 		    	ImageDTO imageDTO=new ImageDTO();
 		      if (listOfImageFiles[i].isFile()) {
 		        String fileName=listOfImageFiles[i].getName();
@@ -48,6 +51,8 @@ public class ProductManagerImpl implements ProductManager {
 		      } 
 		      imageList.add(imageDTO);
 		    }
+		}
+		
 		    
 		return imageList;
 	}
@@ -71,6 +76,28 @@ public class ProductManagerImpl implements ProductManager {
 
            return encodedfile;
        }
+
+	@Override
+	public APIResponse getImageByProductId(Long id) {
+		
+		String base64Image = productDao.getImageByProductId(id);
+		
+		APIResponse apiResponse = new APIResponse();
+		
+		if(base64Image != null)
+		{
+			apiResponse.setStatusId(200);
+			apiResponse.setStatusMessage("Success");
+			apiResponse.setData(base64Image);
+			
+			return apiResponse;
+		}
+		
+		apiResponse.setStatusId(303);
+		apiResponse.setStatusMessage("Failed to get image");
+		
+		return apiResponse;
+	}
 	
 
 	
