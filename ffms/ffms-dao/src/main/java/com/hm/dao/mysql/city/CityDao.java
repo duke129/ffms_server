@@ -16,5 +16,9 @@ public interface CityDao {
 	
 	void saveCity(CityDTO cityDto);
 	List<City> findAllCity();
+	Integer getTotalCityCount();
+	Integer getTotalBranchCount();
+	Integer getTotalAreaCount();
+	
 
 }

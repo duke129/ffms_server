@@ -177,6 +177,41 @@ public class LocationController {
     }
 
     
+  //-------------------Retrieve Total No.of Count of the City --------------------------------------------------------
     
+    @RequestMapping(value = "/citycount", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getTotalCityCount() {
+        Integer areaDTO = locationService.getTotalCityCount();
+        logger.info("Total city count is ::::"+areaDTO);
+        if(areaDTO==null){
+            return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<Integer>(areaDTO, HttpStatus.OK);
+    }
+    
+//-------------------Retrieve Total No.of Count of the Branch --------------------------------------------------------
+    
+    @RequestMapping(value = "/branchcount", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getTotalBranchCount() {
+        Integer areaDTO = locationService.getTotalBranchCount();
+        logger.info("Total city count is ::::"+areaDTO);
+        if(areaDTO==null){
+            return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<Integer>(areaDTO, HttpStatus.OK);
+    }
+    
+    
+//-------------------Retrieve Total No.of Count of the Area --------------------------------------------------------
+    
+    @RequestMapping(value = "/areacount", method = RequestMethod.GET)
+    public ResponseEntity<Integer> getTotalAreaCount() {
+        Integer areaDTO = locationService.getTotalAreaCount();
+        logger.info("Total city count is ::::"+areaDTO);
+        if(areaDTO==null){
+            return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<Integer>(areaDTO, HttpStatus.OK);
+    }
     
 }

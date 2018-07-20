@@ -84,13 +84,9 @@ public class LocationManagerImpl implements LocationManager {
 
 	@Override
 	public List<BranchDTO> findAllBranch() {
-		List<Branch> listbranchdetails=branchDao.findAllBranch();
+		List<BranchDTO> listbranchdetails=branchDao.findAllBranch();
 		logger.info("In location service Impl Branch details is :: "+listbranchdetails);
-		List<BranchDTO> listofbranchdtoresult = listbranchdetails.stream().map(temp -> {
-    	return convertIntoBranchDTO(temp);
-        }).collect(Collectors.toList());
-		logger.info("In location service Impl Branch value converted into BranchDTO  details is :: "+listofbranchdtoresult);
-       return listofbranchdtoresult;
+       return listbranchdetails;
 	}
 
 	public BranchDTO convertIntoBranchDTO(Branch temp) {
@@ -107,13 +103,9 @@ public class LocationManagerImpl implements LocationManager {
 
 	@Override
 	public List<AreaDTO> findAllArea() {
-		List<Area> listbranchdetails=areaDao.findAllArea();
+		List<AreaDTO> listbranchdetails=areaDao.findAllArea();
 		logger.info("In location service Impl city details is :: "+listbranchdetails);
-		List<AreaDTO> listOfAreaDtoResult = listbranchdetails.stream().map(temp -> {
-    	return convertIntoAreaDTO(temp);
-        }).collect(Collectors.toList());
-		logger.info("In location service Impl city value converted into CityDTO  details is :: "+listOfAreaDtoResult);
-       return listOfAreaDtoResult;
+		return listbranchdetails;
 	}
 	
 	public AreaDTO convertIntoAreaDTO(Area temp) {
@@ -160,6 +152,24 @@ public class LocationManagerImpl implements LocationManager {
 		}
 		
 		return areaTypeHeadVoList;
+	}
+
+	@Override
+	public Integer getTotalCityCount() {
+		Integer citycount=cityDao.getTotalCityCount();
+		return citycount;
+	}
+
+	@Override
+	public Integer getTotalBranchCount() {
+		Integer citycount=cityDao.getTotalBranchCount();
+		return citycount;
+	}
+
+	@Override
+	public Integer getTotalAreaCount() {
+		Integer citycount=cityDao.getTotalAreaCount();
+		return citycount;
 	}
 
 }

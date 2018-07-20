@@ -32,9 +32,15 @@ public interface LocationManager {
 	 
 	 BranchDTO findBranchById(String id);
 	 
-	 
 	 List<TypeHeadVo> getBranchDetailsByCityId(String cityId);
 	 
 	 List<TypeHeadVo> getAreaDetailsByBranchId(String branchId);
+	 
+	 Integer getTotalCityCount();
+	 
+	 Integer getTotalBranchCount();
+	 
+	 Integer getTotalAreaCount();
+	 
 
 }
