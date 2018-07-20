@@ -14,11 +14,15 @@ public interface FFMSConstant {
 	
 	Integer ACTIVITY_COMPLETED = 101;
 	Integer ACTIVITY_NOT_DONE = 102;
+	Integer ACTIVITY_REJECTED = 107;
 	
 	Integer NEW_LEAD = 103;
 	Integer IN_PROGRESS = 104;
 	Integer REJECTED = 105;
 	Integer COMPLETED = 106;
+	
+	Long SALES_REQUEST = 1l;
+	Long SERVICE_REQUEST = 2l;
 	
 	List<Integer> ticketStatusList = Arrays.asList(new Integer[] { NEW_LEAD, IN_PROGRESS , REJECTED , COMPLETED});
 	

@@ -22,6 +22,7 @@ public interface ProductDao {
 	
 	ProductDTO findProductImageListByProductId(Long modelId);
 	
+	String getImageByProductId(Long id);
 	
 
 }

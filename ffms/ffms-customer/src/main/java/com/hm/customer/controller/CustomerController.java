@@ -3,6 +3,8 @@ package com.hm.customer.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hm.customer.manager.CustomerManager;
 import com.hm.util.entity.Customer;
 import com.hm.util.model.APIResponse;
+import com.hm.util.model.CustomerVo;
 import com.hm.util.model.TitleDTO;
 import com.hm.util.model.TypeHeadVo;
+import com.hm.util.model.filter.CustomerFilter;
 
 @CrossOrigin
 @Controller
@@ -26,19 +30,15 @@ import com.hm.util.model.TypeHeadVo;
 @RequestMapping("/customer")
 public class CustomerController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+	
 	@Autowired
 	CustomerManager customerManager;
-	
-	@GetMapping(path = "/customer")
-	public String customerTest()
-	{
-		return "Customer tested";
-	}
 	
 	@PostMapping(path = "/add")
 	public String addCustomer(@RequestBody Customer customer)
 	{
-		System.out.println("ADD customer controller @@@@@@@@@@@@"+customer);
+		logger.info("ADD customer controller :: "+customer);
 		 return customerManager.addCustomer(customer);
 		 
 	}
@@ -87,5 +87,12 @@ public class CustomerController {
        
         return aPIResponse;
     }
+	
+	@PostMapping(path = "/filter")
+	public List<CustomerVo> getCustomerByFilter(@RequestBody CustomerFilter filter) {
+		
+		logger.info("getCustomerByFilter  payload :: "+filter);
+		return customerManager.getCustomerByFilter(filter);
+	}
 	
 }

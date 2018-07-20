@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.hm.dao.mysql.customer.CustomerDao;
 import com.hm.util.entity.Customer;
+import com.hm.util.model.CustomerVo;
 import com.hm.util.model.TitleDTO;
+import com.hm.util.model.filter.CustomerFilter;
 
 @Service
 public class CustomerManagerImpl implements CustomerManager {
@@ -37,6 +39,12 @@ public class CustomerManagerImpl implements CustomerManager {
 	@Override
 	public List<TitleDTO> getTitles() {
 		return customerDao.getTitles();
+	}
+	
+	@Override
+	public List<CustomerVo> getCustomerByFilter(CustomerFilter filter) {
+
+		return customerDao.getCustomerByFilter(filter);
 	}
 
 }

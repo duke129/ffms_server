@@ -31,6 +31,7 @@ import com.hm.util.model.DashBoardSummaryCountVo;
 import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
+import com.hm.util.model.TicketFilter;
 
 /**
  * @author kiran
@@ -142,6 +143,18 @@ public class TicketManagerImpl implements TicketManager {
 		apiResponse.setStatusId(303);
 		apiResponse.setStatusMessage("Request body can't be null");
 		return apiResponse;
+	}
+
+	@Override
+	public APIResponse searchTicketWithFilter(TicketFilter ticketFilter) {
+		
+		APIResponse response = new APIResponse();
+		
+		response.setStatusId(200);
+		response.setStatusMessage("Success");
+		response.setData(ticketDAO.searchTicketWithFilter(ticketFilter));
+		
+		return response;
 	}
 
 }

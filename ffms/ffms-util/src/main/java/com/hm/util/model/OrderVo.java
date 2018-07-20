@@ -5,10 +5,6 @@ package com.hm.util.model;
 
 import java.io.Serializable;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 /**
  * @author kiran
  *
@@ -23,7 +19,8 @@ public class OrderVo implements Serializable{
 	private String price;
 	private Long productId;
     private int quantity;
-    private Long ticketId;
+    private String productName;
+    
 	public String getPrice() {
 		return price;
 	}
@@ -42,15 +39,16 @@ public class OrderVo implements Serializable{
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public Long getTicketId() {
-		return ticketId;
+	
+	
+	
+	
+	public String getProductName() {
+		return productName;
 	}
-	public void setTicketId(Long ticketId) {
-		this.ticketId = ticketId;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	
-	
-	
 	public Long getIdOrder() {
 		return idOrder;
 	}
@@ -59,9 +57,12 @@ public class OrderVo implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "OrderVo [price=" + price + ", productId=" + productId + ", quantity=" + quantity + ", ticketId="
-				+ ticketId + "]";
+		return "OrderVo [idOrder=" + idOrder + ", price=" + price + ", productId=" + productId + ", quantity="
+				+ quantity + ", productName=" + productName + "]";
 	}
+	
+	
+	
     
     
     

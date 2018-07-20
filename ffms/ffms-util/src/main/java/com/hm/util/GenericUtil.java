@@ -94,5 +94,10 @@ public class GenericUtil {
 		
 		
 	}
+	
+	public static String generateTicketNo()
+	{
+		return String.valueOf(System.currentTimeMillis());
+	}
 
 }

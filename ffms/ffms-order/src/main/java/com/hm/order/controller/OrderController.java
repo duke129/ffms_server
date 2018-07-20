@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hm.order.manager.OrderManager;
 import com.hm.util.model.APIResponse;
+import com.hm.util.model.OrderActivityUpdate;
 import com.hm.util.model.OrderVo;
 
 /**
@@ -34,10 +35,9 @@ public class OrderController {
 	
 	
 	@PostMapping("save")
-	public APIResponse saveOrder(@RequestBody List<OrderVo> ordersVo)
+	public APIResponse saveOrder(@RequestBody OrderActivityUpdate orderActivityUpdate)
 	{
-		System.out.println("@@@@@@@@ order :: "+ordersVo);
-		return orderManager.saveOrder(ordersVo);
+		return orderManager.saveOrder(orderActivityUpdate);
 	}
 	
 	@GetMapping("getByTicketId/{ticketId}")

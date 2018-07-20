@@ -32,10 +32,16 @@ public class Customer implements Serializable {
 	private String emailId;
 
 	private String firstName;
+	
+	private String middleName;
 
 	private String lastName;
 
 	private String mobileNumber;
+	
+	private String alternativeEmailId;
+	
+	private String officeNumber;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifiedOn;
@@ -234,6 +240,34 @@ public class Customer implements Serializable {
 
 	public void setModifiedByUserId(User modifiedByUserId) {
 		this.modifiedByUserId = modifiedByUserId;
+	}
+	
+	
+
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+	
+	
+
+	public String getAlternativeEmailId() {
+		return alternativeEmailId;
+	}
+
+	public void setAlternativeEmailId(String alternativeEmailId) {
+		this.alternativeEmailId = alternativeEmailId;
+	}
+
+	public String getOfficeNumber() {
+		return officeNumber;
+	}
+
+	public void setOfficeNumber(String officeNumber) {
+		this.officeNumber = officeNumber;
 	}
 
 	@Override

@@ -1,6 +1,14 @@
 package com.hm.util.model;
 
-public class ImageDTO {
+import java.io.Serializable;
+
+public class ImageDTO  implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String name;
 	private String image;
 	public String getName() {

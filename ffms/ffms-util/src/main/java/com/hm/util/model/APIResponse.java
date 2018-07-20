@@ -3,11 +3,13 @@
  */
 package com.hm.util.model;
 
+
 /**
  * @author kiran
  *
  */
 public class APIResponse {
+	
 	
 	private Integer statusId;
 	private String statusMessage;

@@ -17,6 +17,8 @@ public class Ticket implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long idTicket;
+	
+	private String tickectNo;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdOn;
@@ -25,6 +27,10 @@ public class Ticket implements Serializable {
 	private Date modifiedOn;
 
 	private String ticketDescription;
+	
+	private String comments;
+	
+	private String rejectionReason;
 
 	//bi-directional many-to-one association to Asset
 	@ManyToOne
@@ -151,5 +157,34 @@ public class Ticket implements Serializable {
 	public void setUser3(User user3) {
 		this.user3 = user3;
 	}
+
+	public String getTickectNo() {
+		return tickectNo;
+	}
+
+	public void setTickectNo(String tickectNo) {
+		this.tickectNo = tickectNo;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public String getRejectionReason() {
+		return rejectionReason;
+	}
+
+	public void setRejectionReason(String rejectionReason) {
+		this.rejectionReason = rejectionReason;
+	}
+	
+	
+	
+	
+	
 
 }

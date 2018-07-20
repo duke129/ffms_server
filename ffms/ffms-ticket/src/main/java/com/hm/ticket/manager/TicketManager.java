@@ -11,6 +11,7 @@ import com.hm.util.model.BasicInfoUpdate;
 import com.hm.util.model.ProspectCreation;
 import com.hm.util.model.TicketCardViewData;
 import com.hm.util.model.TicketDetails;
+import com.hm.util.model.TicketFilter;
 
 /**
  * @author kiran
@@ -27,5 +28,7 @@ public interface TicketManager {
 	APIResponse getDashBoardSummary();
 	
 	APIResponse basicInfoUpdate(BasicInfoUpdate basicInfoUpdate);
+	
+	APIResponse searchTicketWithFilter(TicketFilter ticketFilter);
 	
 }
