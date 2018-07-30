@@ -3,6 +3,7 @@
  */
 package com.hm.dao.mysql.area;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,8 @@ import com.hm.util.entity.Branch;
 import com.hm.util.entity.Status;
 import com.hm.util.entity.User;
 import com.hm.util.model.AreaDTO;
+import com.hm.util.model.BranchDTO;
+import com.hm.util.model.filter.AreaFilter;
 
 /**
  * @author kiran
@@ -36,6 +40,7 @@ public class AreaDaoImpl implements AreaDao{
 	
 	private static final String AREA_Details="select a.idArea,a.areaName,a.code,a.branchId,b.branchName,b.cityId,c.cityName,a.status from Area a inner join Branch b on a.branchId=b.idBranch inner join City c on c.idCity=b.cityId";
 	
+	private static final String GET_Area_COUNT_BASEDON_FILTER="select count(*) from Area a inner join Branch b on a.branchId=b.idBranch inner join City c on c.idCity=b.cityId";
 	@Autowired
 	AreaRepository areaRepository;
 	
@@ -130,6 +135,87 @@ public class AreaDaoImpl implements AreaDao{
 		}
 		
 		return areaDTOList;
+	}
+	@Override
+	public Integer getTotalAreaCount(AreaFilter filter) {
+		StringBuilder whereCluse = new StringBuilder("");
+		Integer count = 0;
+		try {
+			if (filter.getAreaName() != null && !filter.getAreaName().isEmpty())
+				whereCluse.append(" and a.areaName LIKE :areaName ");
+
+			if (filter.getCode() != null && !filter.getCode().isEmpty())
+				whereCluse.append(" and a.code LIKE :code");
+			
+			String countQuery = GET_Area_COUNT_BASEDON_FILTER.toString().concat(whereCluse.toString()).replaceFirst("and", "where").split("limit")[0];
+			System.out.println("Area count query is:::::" + countQuery);
+			Query queryCount = entityManager.createNativeQuery(countQuery);
+
+			if (filter.getAreaName() != null && !filter.getAreaName().isEmpty()) {
+				queryCount.setParameter("areaName", "%"+filter.getAreaName()+"%");
+			}
+
+			if (filter.getCode() != null && !filter.getCode().isEmpty()) {
+				queryCount.setParameter("code", "%"+filter.getCode()+"%");
+			}
+			BigInteger totalCityCount = (BigInteger) queryCount.getResultList().stream().findFirst().orElse(0);
+			count = totalCityCount.intValue();
+			System.out.println("Total No of Area in the database is ::" + count);
+		} catch (Exception e) {
+		}
+		return count;
+	}
+	@Override
+	public List<AreaDTO> findAreaDetailsByFilter(AreaFilter filter) {
+		StringBuilder whereCluse = new StringBuilder("");
+		List<AreaDTO> list = new ArrayList<AreaDTO>();
+		try {
+
+			if (filter.getAreaName() != null && !filter.getAreaName().isEmpty())
+				whereCluse.append(" and a.areaName LIKE:areaName ");
+			
+			if (filter.getCode() != null && !filter.getCode().isEmpty())
+				whereCluse.append(" and a.code LIKE:code");
+
+			if (filter.getPageSize() > 0 && filter.getOffset() >= 0) {
+				whereCluse.append(" limit " + filter.getOffset() + " , " + filter.getPageSize());
+			}
+
+			String completeQuery = AREA_Details.toString().concat(whereCluse.toString()).replaceFirst("and",
+					"where");
+			
+			System.out.println("Area complete query is :::"+completeQuery);
+			Query query = entityManager.createNativeQuery(completeQuery);
+			if (filter.getAreaName() != null && !filter.getAreaName().isEmpty()) {
+				query.setParameter("areaName", "%"+filter.getAreaName()+"%");
+			}
+
+			if (filter.getCode() != null && !filter.getCode().isEmpty()) {
+				query.setParameter("code", "%"+filter.getCode()+"%");
+			}
+
+			List<Object[]> areaList = query.getResultList();
+			System.out.println("************" + areaList);
+			for (Object obj[] : areaList) {
+				AreaDTO areaDto = new AreaDTO();
+				areaDto.setAreaId(String.valueOf(obj[0]));
+				areaDto.setAreaName(String.valueOf(obj[1]));
+				areaDto.setCode(String.valueOf(obj[2]));
+				areaDto.setBranchId(String.valueOf(obj[3]));
+				areaDto.setBranchName(String.valueOf(obj[4]));
+				areaDto.setCityId(String.valueOf(obj[5]));
+				areaDto.setCityName(String.valueOf(obj[6]));
+				areaDto.setStatusId(String.valueOf(obj[7]));
+				list.add(areaDto);
+
+			}
+
+			System.out.println("Area details value after setting is :::::::" + areaList);
+
+		} catch (Exception e) {
+			System.out.println("Exception:::::::::" + e);
+		}
+		return list;
 	}
 
 }

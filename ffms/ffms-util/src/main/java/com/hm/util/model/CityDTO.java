@@ -19,9 +19,17 @@ public class CityDTO {
 	private String code;
 	private String state;
 	private String status;
+	private Integer count;
 	
 	
 	
+	
+	public Integer getCount() {
+		return count;
+	}
+	public void setCount(Integer count) {
+		this.count = count;
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -64,8 +72,10 @@ public class CityDTO {
 	@Override
 	public String toString() {
 		return "CityDTO [cityId=" + cityId + ", cityName=" + cityName + ", statusId=" + statusId + ", code=" + code
-				+ ", state=" + state + ", status=" + status + "]";
+				+ ", state=" + state + ", status=" + status + ", count=" + count + "]";
 	}
+	
+	
 	
 	
 	

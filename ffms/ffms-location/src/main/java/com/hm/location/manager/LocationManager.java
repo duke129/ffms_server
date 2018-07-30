@@ -9,6 +9,9 @@ import com.hm.util.model.AreaDTO;
 import com.hm.util.model.BranchDTO;
 import com.hm.util.model.CityDTO;
 import com.hm.util.model.TypeHeadVo;
+import com.hm.util.model.filter.AreaFilter;
+import com.hm.util.model.filter.BranchFilter;
+import com.hm.util.model.filter.CityFilter;
 
 /**
  * @author kiran
@@ -36,11 +39,18 @@ public interface LocationManager {
 	 
 	 List<TypeHeadVo> getAreaDetailsByBranchId(String branchId);
 	 
-	 Integer getTotalCityCount();
+	 Integer getTotalCityCount(CityFilter filter);
 	 
-	 Integer getTotalBranchCount();
+	 Integer getTotalBranchCount(BranchFilter filter);
 	 
-	 Integer getTotalAreaCount();
+	 Integer getTotalAreaCount(AreaFilter filter);
+	 
+	 List<CityDTO> findCityDetailsByFilter(CityFilter filter);
+	 
+	 
+	 List<BranchDTO> findBranchDetailsByFilter(BranchFilter filter);
+	 
+	 List<AreaDTO> findAreaDetailsByFilter(AreaFilter filter);
 	 
 
 }

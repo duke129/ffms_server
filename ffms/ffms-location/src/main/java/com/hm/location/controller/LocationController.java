@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,9 +24,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.hm.location.manager.LocationManager;
 import com.hm.util.model.APIResponse;
 import com.hm.util.model.AreaDTO;
+import com.hm.util.model.AssetVo;
 import com.hm.util.model.BranchDTO;
 import com.hm.util.model.CityDTO;
 import com.hm.util.model.TypeHeadVo;
+import com.hm.util.model.filter.AreaFilter;
+import com.hm.util.model.filter.AssetFilter;
+import com.hm.util.model.filter.BranchFilter;
+import com.hm.util.model.filter.CityFilter;
 
 /**
  * @author Pawan
@@ -179,9 +185,9 @@ public class LocationController {
     
   //-------------------Retrieve Total No.of Count of the City --------------------------------------------------------
     
-    @RequestMapping(value = "/citycount", method = RequestMethod.GET)
-    public ResponseEntity<Integer> getTotalCityCount() {
-        Integer areaDTO = locationService.getTotalCityCount();
+    @RequestMapping(value = "/citycount", method = RequestMethod.POST)
+    public ResponseEntity<Integer> getTotalCityCount(@RequestBody CityFilter filter) {
+        Integer areaDTO = locationService.getTotalCityCount(filter);
         logger.info("Total city count is ::::"+areaDTO);
         if(areaDTO==null){
             return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
@@ -191,9 +197,9 @@ public class LocationController {
     
 //-------------------Retrieve Total No.of Count of the Branch --------------------------------------------------------
     
-    @RequestMapping(value = "/branchcount", method = RequestMethod.GET)
-    public ResponseEntity<Integer> getTotalBranchCount() {
-        Integer areaDTO = locationService.getTotalBranchCount();
+    @RequestMapping(value = "/branchcount", method = RequestMethod.POST)
+    public ResponseEntity<Integer> getTotalBranchCount(@RequestBody BranchFilter filter) {
+        Integer areaDTO = locationService.getTotalBranchCount(filter);
         logger.info("Total city count is ::::"+areaDTO);
         if(areaDTO==null){
             return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
@@ -204,14 +210,53 @@ public class LocationController {
     
 //-------------------Retrieve Total No.of Count of the Area --------------------------------------------------------
     
-    @RequestMapping(value = "/areacount", method = RequestMethod.GET)
-    public ResponseEntity<Integer> getTotalAreaCount() {
-        Integer areaDTO = locationService.getTotalAreaCount();
+    @RequestMapping(value = "/areacount", method = RequestMethod.POST)
+    public ResponseEntity<Integer> getTotalAreaCount(@RequestBody AreaFilter filter) {
+        Integer areaDTO = locationService.getTotalAreaCount(filter);
         logger.info("Total city count is ::::"+areaDTO);
         if(areaDTO==null){
             return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }
         return new ResponseEntity<Integer>(areaDTO, HttpStatus.OK);
     }
+    
+ /*##########Retrieve City record based on the Passing Filter's parameters.
+    			If Filter value is None it will return all the city record#############*/
+    
+    @PostMapping(path = "/cityfilter")
+	public List<CityDTO> getCityDetailsByFilter(@RequestBody CityFilter filter) {
+    	System.out.println("Coming filter value "+filter);
+    	List<CityDTO> cityList = locationService.findCityDetailsByFilter(filter);
+    	logger.info(" City List details returning to APIResponse For UI :::: " + cityList);
+		return cityList;
+	}
+
+    
+    
+      
+    
+    /*##########Retrieve Branch record based on the Passing Filter's parameters.
+	If Filter value is None it will return all the Branch record #############*/
+
+		@PostMapping(path = "/branchfilter")
+		public List<BranchDTO> getBranchDetailsByFilter(@RequestBody BranchFilter filter) {
+		System.out.println("Coming filter value "+filter);
+		List<BranchDTO> branchList = locationService.findBranchDetailsByFilter(filter);
+		logger.info(" Branch List details returning to APIResponse For UI :::: " + branchList);
+		return branchList;
+}
+		
+		
+		 /*##########Retrieve Area record based on the Passing Filter's parameters.
+		If Filter value is None it will return all the Area record #############*/
+
+			@PostMapping(path = "/areafilter")
+			public List<AreaDTO> getAreaDetailsByFilter(@RequestBody AreaFilter filter) {
+			System.out.println("Coming filter value "+filter);
+			List<AreaDTO> areaList = locationService.findAreaDetailsByFilter(filter);
+			logger.info(" Area List details returning to APIResponse For UI :::: " + areaList);
+			return areaList;
+	}
+
     
 }

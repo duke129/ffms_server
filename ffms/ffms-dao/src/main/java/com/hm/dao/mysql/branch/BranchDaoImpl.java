@@ -3,6 +3,7 @@
  */
 package com.hm.dao.mysql.branch;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +24,9 @@ import com.hm.util.entity.Status;
 import com.hm.util.entity.User;
 import com.hm.util.model.AreaDTO;
 import com.hm.util.model.BranchDTO;
+import com.hm.util.model.CityDTO;
 import com.hm.util.model.ProductDTO;
+import com.hm.util.model.filter.BranchFilter;
 
 /**
  * @author kiran
@@ -43,6 +47,8 @@ public class BranchDaoImpl implements BranchDao {
 	private static final String BRANCH_BY_CITYID = "select b.idBranch,b.branchName,b.cityId,c.cityName,b.status from Branch b inner join City c on b.cityId=c.idCity where b.cityId=?";
 
 	private static final String BRANCH_DETAILS="select b.idBranch,b.branchName,b.code,b.cityId,c.cityName,c.state,b.status from Branch b inner join City c on b.cityId=c.idCity";
+
+	private static final String GET_Branch_COUNT_BASEDON_FILTER="select count(*)from Branch b inner join City c on b.cityId=c.idCity";
 
 	
 	@Override
@@ -136,6 +142,92 @@ public class BranchDaoImpl implements BranchDao {
 		}
 		
 		return branchDTOList;
+	}
+
+	@Override
+	public List<BranchDTO> findBranchDetailsByFilter(BranchFilter filter) {
+		StringBuilder whereCluse = new StringBuilder("");
+		List<BranchDTO> list = new ArrayList<BranchDTO>();
+		try {
+
+			if (filter.getBranchName() != null && !filter.getBranchName().isEmpty())
+				whereCluse.append(" and b.branchName LIKE :branchName ");
+
+			/*
+			 * if (filter.getName() != null && filter.getCityCode() != null) {
+			 * whereCluse.append(" and "); }
+			 */
+			if (filter.getCode() != null && !filter.getCode().isEmpty())
+				whereCluse.append(" and b.code LIKE :code");
+
+			if (filter.getPageSize() > 0 && filter.getOffset() >= 0) {
+				whereCluse.append(" limit " + filter.getOffset() + " , " + filter.getPageSize());
+			}
+
+			String completeQuery = BRANCH_DETAILS.toString().concat(whereCluse.toString()).replaceFirst("and",
+					"where");
+			
+			System.out.println("**********************"+completeQuery);
+			Query query = entityManager.createNativeQuery(completeQuery);
+			if (filter.getBranchName() != null && !filter.getBranchName().isEmpty()) {
+				query.setParameter("branchName","%"+ filter.getBranchName()+"%");
+			}
+
+			if (filter.getCode() != null && !filter.getCode().isEmpty()) {
+				query.setParameter("code", "%"+filter.getCode()+"%");
+			}
+
+			List<Object[]> branchList = query.getResultList();
+			System.out.println("************" + branchList);
+			for (Object obj[] : branchList) {
+				BranchDTO branchDto = new BranchDTO();
+				branchDto.setBranchId(String.valueOf(obj[0]));
+				branchDto.setBranchName(String.valueOf(obj[1]));
+				branchDto.setCode(String.valueOf(obj[2]));
+				branchDto.setCityId(String.valueOf(obj[3]));
+				branchDto.setCityName(String.valueOf(obj[4]));
+				branchDto.setState(String.valueOf(obj[5]));
+				branchDto.setStatusId(String.valueOf(obj[6]));
+				list.add(branchDto);
+
+			}
+
+			System.out.println("City details value after setting is :::::::" + branchList);
+
+		} catch (Exception e) {
+			System.out.println("Exception:::::::::" + e);
+		}
+		return list;
+	}
+
+	@Override
+	public Integer getTotalBranchCount(BranchFilter filter) {
+		StringBuilder whereCluse = new StringBuilder("");
+		Integer count = 0;
+		try {
+			if (filter.getBranchName() != null && !filter.getBranchName().isEmpty())
+				whereCluse.append(" and b.branchName LIKE :branchName ");
+
+			if (filter.getCode() != null && !filter.getCode().isEmpty())
+				whereCluse.append(" and  b.code LIKE :code");
+			
+			String countQuery = GET_Branch_COUNT_BASEDON_FILTER.toString().concat(whereCluse.toString()).replaceFirst("and", "where").split("limit")[0];
+			System.out.println("Branch count query is:::::" + countQuery);
+			Query queryCount = entityManager.createNativeQuery(countQuery);
+
+			if (filter.getBranchName() != null && !filter.getBranchName().isEmpty()) {
+				queryCount.setParameter("branchName","%" +filter.getBranchName() +"%");
+			}
+
+			if (filter.getCode() != null && !filter.getCode().isEmpty()) {
+				queryCount.setParameter("code", "%"+filter.getCode()+"%");
+			}
+			BigInteger totalCityCount = (BigInteger) queryCount.getResultList().stream().findFirst().orElse(0);
+			count = totalCityCount.intValue();
+			System.out.println("Total No of branch in the database is ::" + count);
+		} catch (Exception e) {
+		}
+		return count;
 	}
 
 

@@ -1,6 +1,6 @@
 package com.hm.util.model;
 
-public class AreaDTO {
+public class AreaDTO{
 	
 	private String areaId;
 	private String areaName;

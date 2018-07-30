@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import com.hm.dao.mysql.area.AreaDao;
 import com.hm.dao.mysql.branch.BranchDao;
 import com.hm.dao.mysql.city.CityDao;
@@ -23,6 +25,9 @@ import com.hm.util.model.AreaDTO;
 import com.hm.util.model.BranchDTO;
 import com.hm.util.model.CityDTO;
 import com.hm.util.model.TypeHeadVo;
+import com.hm.util.model.filter.AreaFilter;
+import com.hm.util.model.filter.BranchFilter;
+import com.hm.util.model.filter.CityFilter;
 
 /**
  * @author pawan
@@ -155,21 +160,42 @@ public class LocationManagerImpl implements LocationManager {
 	}
 
 	@Override
-	public Integer getTotalCityCount() {
-		Integer citycount=cityDao.getTotalCityCount();
+	public Integer getTotalCityCount(CityFilter filter) {
+		Integer citycount=cityDao.getTotalCityCount(filter);
 		return citycount;
 	}
 
 	@Override
-	public Integer getTotalBranchCount() {
-		Integer citycount=cityDao.getTotalBranchCount();
+	public Integer getTotalBranchCount(BranchFilter filter) {
+		Integer citycount=branchDao.getTotalBranchCount(filter);
+		return citycount;
+		
+		
+	}
+
+	@Override
+	public Integer getTotalAreaCount(AreaFilter filter) {
+		Integer citycount=areaDao.getTotalAreaCount(filter);
 		return citycount;
 	}
 
 	@Override
-	public Integer getTotalAreaCount() {
-		Integer citycount=cityDao.getTotalAreaCount();
-		return citycount;
+	public List<CityDTO> findCityDetailsByFilter(CityFilter filter) {
+		List<CityDTO> citylist=cityDao.findCityDetailsByFilter(filter);
+		logger.info("city list is :::"+citylist);
+		return citylist;
+	}
+
+	@Override
+	public List<BranchDTO> findBranchDetailsByFilter(BranchFilter filter) {
+		List<BranchDTO> branchList=branchDao.findBranchDetailsByFilter(filter);
+		return branchList;
+	}
+
+	@Override
+	public List<AreaDTO> findAreaDetailsByFilter(AreaFilter filter) {
+		List<AreaDTO> areaDtoList=areaDao.findAreaDetailsByFilter(filter);
+		return areaDtoList;
 	}
 
 }
