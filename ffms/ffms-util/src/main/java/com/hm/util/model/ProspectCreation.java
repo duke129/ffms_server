@@ -15,6 +15,7 @@ public class ProspectCreation {
 	private Long ticketTypeId;
 	private Date prefferdCallTime;
 	private CustomerVo customer;
+	private Long assetId;
 
 	public String getTicketDescription() {
 		return ticketDescription;
@@ -46,6 +47,16 @@ public class ProspectCreation {
 
 	public void setCustomer(CustomerVo customer) {
 		this.customer = customer;
+	}
+	
+	
+
+	public Long getAssetId() {
+		return assetId;
+	}
+
+	public void setAssetId(Long assetId) {
+		this.assetId = assetId;
 	}
 
 	@Override

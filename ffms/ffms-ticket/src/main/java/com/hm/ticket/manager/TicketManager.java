@@ -25,7 +25,7 @@ public interface TicketManager {
 	
 	List<TicketCardViewData> getTicketSummary(Integer status);
 	
-	APIResponse getDashBoardSummary();
+	APIResponse getDashBoardSummary(Integer ticketType);
 	
 	APIResponse basicInfoUpdate(BasicInfoUpdate basicInfoUpdate);
 	

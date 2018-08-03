@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -22,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hm.dao.mysql.activity.ActivityDao;
 import com.hm.dao.mysql.area.AreaRepository;
+import com.hm.dao.mysql.asset.AssetRepository;
 import com.hm.dao.mysql.branch.BranchRepository;
 import com.hm.dao.mysql.city.CityRepository;
 import com.hm.dao.mysql.customer.CustomerRepository;
@@ -88,6 +88,9 @@ public class TicketDaoImpl  implements TicketDao {
 	
 	@Autowired
 	TicketActivityLogDao ticketActivityLogDao;
+	
+	@Autowired
+	AssetRepository assetRepository;
 	
 	/**
 	 * @author kiran
@@ -166,6 +169,11 @@ public class TicketDaoImpl  implements TicketDao {
 				ticket.setTicketType(ticketTypeRepository.findById(prospectCreation.getTicketTypeId().intValue()).get());
 				ticket.setCreatedOn(new Date());
 				ticket.setModifiedOn(new Date());
+				
+				if(prospectCreation.getTicketTypeId().equals(FFMSConstant.SERVICE_REQUEST))
+				{
+					ticket.setAsset(assetRepository.findById(prospectCreation.getAssetId()).get());
+				}
 
 				ticketRepository.save(ticket);
 				
@@ -528,7 +536,7 @@ public class TicketDaoImpl  implements TicketDao {
 	 * get dash board summary count by ticket status (IN_PROGRESS ,REJECTED,COMPLETED,NEW_LEAD)
 	 */
 	@Override
-	public List<DashBoardSummaryCountVo> getDashBoardSummary() {
+	public List<DashBoardSummaryCountVo> getDashBoardSummary(Integer ticketType) {
 		
 		List<DashBoardSummaryCountVo> countResult =  new ArrayList<DashBoardSummaryCountVo>();
 		FFMSConstant.ticketStatusList.forEach(status -> {
@@ -536,7 +544,7 @@ public class TicketDaoImpl  implements TicketDao {
 			DashBoardSummaryCountVo dashBoardSummaryCountVo = new DashBoardSummaryCountVo();
 			
 			dashBoardSummaryCountVo.setStatusId(status);
-			dashBoardSummaryCountVo.setTotalCounts(ticketRepository.countByStatusBean(statusRepository.findById(status).get()).intValue());
+			dashBoardSummaryCountVo.setTotalCounts(ticketRepository.countByStatusBeanAndTicketType(statusRepository.findById(status).get(),ticketTypeRepository.findById(ticketType).get()).intValue());
 			
 			if (status == FFMSConstant.IN_PROGRESS) {
 				

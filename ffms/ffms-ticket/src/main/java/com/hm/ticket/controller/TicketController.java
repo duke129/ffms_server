@@ -79,10 +79,10 @@ public class TicketController {
 	}
 	
 	@CrossOrigin
-	@GetMapping("dashboard-count")
-	public APIResponse getDashBoardSummary()
+	@GetMapping("dashboard-count/{ticketType}")
+	public APIResponse getDashBoardSummary(@PathVariable("ticketType") Integer ticketType)
 	{
-		return ticketManager.getDashBoardSummary();
+		return ticketManager.getDashBoardSummary(ticketType);
 	}
 	
 	@CrossOrigin

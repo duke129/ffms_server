@@ -29,7 +29,7 @@ public interface TicketDao {
 	
 	int basicInfoUpdate(BasicInfoUpdate basicInfoUpdate);
 	
-	List<DashBoardSummaryCountVo> getDashBoardSummary();
+	List<DashBoardSummaryCountVo> getDashBoardSummary(Integer ticketType);
 	
 	int closeTicket(String customerComments , Long ticketId);
 	

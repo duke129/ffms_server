@@ -88,12 +88,19 @@ public class TicketManagerImpl implements TicketManager {
 	 * get DashBoard summary count 
 	 */
 	@Override
-	public APIResponse getDashBoardSummary() {
+	public APIResponse getDashBoardSummary(Integer ticketType) {
 		
 		APIResponse response = new APIResponse();
-		response.setStatusId(200);
-		response.setStatusMessage("Success");
-		response.setData(ticketDAO.getDashBoardSummary());
+		
+		if(ticketType != null && ticketType > 0)
+		{	
+			response.setStatusId(200);
+			response.setStatusMessage("Success");
+			response.setData(ticketDAO.getDashBoardSummary(ticketType));
+		}
+		
+		response.setStatusId(302);
+		response.setStatusMessage("Failed to get Dashboard count ");
 		
 		return response;
 	}
